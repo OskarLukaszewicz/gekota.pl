@@ -1,0 +1,133 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block main %}
+    
+    {% if "ROLE_SUPERADMIN" in app.user.getRoles %}
+
+        <div class='d-flex align-items-end'>
+            <h4 class="sectionHeader w-25">
+                Użytkownicy
+            </h4>
+            <h4 class="sectionHeader w-50 ml-auto p-1">
+                <button class="w-100 m-0">
+                    <a href="{{path('admin_users_action', {'action' : "create" })}}">
+                        Dodaj użytkownika
+                    </a>
+                </button>
+            </h4>
+        </div>
+        <ul class="list-unstyled components">
+            {% for user in users %}
+                <li {% if user.nickname == nickname %} class="itemActive contentItem" {% else %} class="contentItem" {% endif %}>
+                    <a class="px-3 d-flex align-items-center" href="{{path('admin_users_show', {'nickname' : user.nickname})}}">
+                        {{ user.nickname }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul> 
+
+    {% else %}
+    
+        <div class='d-flex align-items-end'>
+            <h1 class="sectionHeader w-25">
+                Profil
+            </h1>
+        </div>
+        <ul class="list-unstyled components">
+            <li {% if app.user.nickname == nickname %} class="itemActive contentItem" {% else %} class="contentItem" {% endif %}>
+                <a class="px-3 d-flex align-items-center" href="{{path('admin_users_show', {'nickname' : app.user.nickname})}}">
+                    {{ app.user.nickname }}
+                </a>
+            </li>
+        </ul>
+
+    {% endif %}
+
+{% endblock %}
+
+{% block sidebar %}
+
+    {% if "ROLE_SUPERADMIN" in app.user.getRoles %}
+        {% if selectedUser %}
+            <div class="row">
+                <button class="offset-2 col-8">
+                    <a href="{{path('admin_users_action', {'action' : "remove", id : selectedUser.id})}}" class="deleteButton rounded">
+                        Usuń
+                    </a>
+                </button>
+            </div>
+            <div class="row sidebarContainer border border-dark">
+                <div class="col-12 text-center" >
+                    <h4 class="text-light mt-3 mb-2 ml-2">{{ selectedUser.nickname }}</h4>
+    
+                    <div class="sidebarMenuButtons row">
+                        <button class="menuTab col-12 itemActive" data-tab-name="info">Informacje</button>
+                    </div>
+                </div>
+                <div class='infoContainer'>
+                    <div class="row p-1 m-1">
+                        <div class="col-5">Nickname: </div>
+                        <div class="col-7">{{selectedUser.nickname}}</div>
+                        <div class="col-5">Role: </div>
+                        <div class="col-7">{{selectedUser.roles|join(', ')}}</div>
+                        <div class="col-5">Ustaw role: </div>
+                        <div class="col-7">
+                            <form method="POST" action="{{path('admin_users_action', {'action' : "updateRoles", id : selectedUser.id})}}">
+                                <input name="roles[]" type="checkbox" value="ROLE_ADMIN" {% if "ROLE_ADMIN" in selectedUser.roles %}checked{%endif%} id="admin">
+                                <label for="admin">ADMIN</label>
+                                <br/>
+                                <input name="roles[]" type="checkbox" value="ROLE_SUPERADMIN" {% if "ROLE_SUPERADMIN" in selectedUser.roles %}checked{%endif%} id="superadmin">
+                                <label for="superadmin">SUPERADMIN</label>
+                                <br/>
+                                <input type="submit">
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        {% if selectedUser %}
+            <div class="row">
+                <button class="col-6">
+                    <a href="{{path('admin_users_action', {'action' : "update", id : selectedUser.id })}}">
+                        Edytuj
+                    </a>
+                </button>
+                <button class="col-6">
+                    <a href="{{path('admin_users_action', {'action' : "remove", id : selectedUser.id})}}" class="deleteButton">
+                        Usuń
+                    </a>
+                </button>
+            </div>
+            <div class="row sidebarContainer border border-dark">
+                <div class="col-12 text-center" >
+                    <h4 class="text-light mt-3 mb-2 ml-2">{{ selectedUser.nickname }}</h4>
+    
+                    <div class="sidebarMenuButtons row">
+                        <button class="menuTab col-12 itemActive" data-tab-name="info">Informacje</button>
+                    </div>
+                </div>
+                <div class='infoContainer'>
+                    <div class="row p-1 m-1">
+                        <div class="col-5">Login: </div>
+                        <div class="col-7">{{selectedUser.username}} </div>
+                        <div class="col-5">Nickname: </div>
+                        <div class="col-7">{{selectedUser.nickname}}</div>
+                        <div class="col-5">Role: </div>
+                        <div class="col-7">{{selectedUser.roles|join(', ')}}</div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}
+
+{% block assets %}
+
+    {{ parent() }}
+    <script src="{{asset('js/modal.js')}}"></script>
+    
+{% endblock %}

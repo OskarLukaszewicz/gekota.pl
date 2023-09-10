@@ -1,0 +1,46 @@
+{% if parentTemplate == 'images.html.twig' %}
+
+    <div class="m-2 w-100">
+        <div class="d-inline">
+            <label for="searchBar">Szukaj:</label>
+            <input type="text" id="searchBar">
+        </div>
+        <input type="button" id="imageViewSizeButton" value="Widok" />
+    </div>
+
+    <div class="row m-0">
+        {% for image in images %}
+
+            <div class="col-3 col-2 col-1 imageContainer p-1">
+                <img src={{ asset('images/'~image) }} class="addImageImage" data-url="{{image.url}}"></img>
+                <button class="deleteXButton"> <a class="deleteButton" href="{{path('admin_images_action', {'action' : "remove", id : image.id })}}">x</a></button>
+            </div>
+
+        {% endfor %}
+    </div>
+
+{% else %}
+    <div class="addImageContainer">
+        <div class="utlisBar">
+            <div class="search">
+                <label for="searchBar">Szukaj:</label>
+                <input type="text" id="searchBar">
+            </div>
+            <input type="submit" form="addImagesForm" value="Dodaj zdjęcia"/>
+            <input type="button" id="imageViewSizeButton" value="Widok" />
+        </div>
+        <form action="{{action}}" id="addImagesForm" method="post" class="addImageForm row m-0 border border-dark p-1">
+            {% for image in images %}
+                <div class="col-3 col-2 col-1 imageContainer">
+                    <img src={{ asset('images/'~image) }} class="addImageImage" data-url="{{image.url}}">
+                    <input type="checkbox" name="ids[]" value="{{image.id}}">
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+{% endif %}
+
+<script src="{{asset('js/change-image-view.js')}}"></script>
+
+
+

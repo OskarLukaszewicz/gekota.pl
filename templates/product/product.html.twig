@@ -1,0 +1,68 @@
+{% extends 'product/layout.html.twig' %}
+
+{% block description %}{{animal.commonName}} {{ animal.spieces }}, zwierzęta hodowlane, sprawdź warunki hodowli, cena, Sklep terrarystyczny Gekota{% endblock %}
+{% block title %} {{ animal.commonName }} - sklep zoologiczny Gekota - Poznań{% endblock %}
+
+
+
+    {% block images %}
+
+    
+
+    {% if imagesList|length > 2 %}
+    
+        <div class="row gx-0">
+            <div class="container col-3">
+                <div class="col-12 row gx-0"> 
+                    <a href="{{asset('images/'~imagesList[1])}}" data-lightbox="{{animal.id}}" data-title="{{animal.commonName}} {{animal.spieces}}">
+                        <img src="{{asset('images/'~imagesList[1])}}" class="offerPhotoSide" alt="{{animal.commonName}} {{animal.spieces}}">
+                    </a> 
+                </div>
+                <div class="col-12 row gx-0"> 
+                    <a href="{{asset('images/'~imagesList[2])}}" data-lightbox="{{animal.id}}" data-title="{{animal.commonName}} {{animal.spieces}}">
+                        <img src="{{asset('images/'~imagesList[2])}}" class="offerPhotoSide" alt="{{animal.commonName}} {{animal.spieces}}">
+                    </a> 
+                </div>
+                {% if imagesList[3] is defined %}  
+                <div class="col-12 row gx-0"> 
+                    <a href="{{asset('images/'~imagesList[3])}}" data-lightbox="{{animal.id}}" data-title="{{animal.commonName}} {{animal.spieces}}">
+                        <img src="{{asset('images/'~imagesList[3])}}" class="offerPhotoSide" alt="{{animal.commonName}} {{animal.spieces}}">
+                    </a> 
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-9"> 
+                <a href="{{asset('images/'~imagesList[0])}}" data-lightbox="{{animal.id}}" data-title="{{animal.commonName}} {{animal.spieces}}">
+                    <img src="{{asset('images/'~imagesList[0])}}" class="offerPhoto" alt="{{animal.commonName}} {{animal.spieces}}">
+                </a> 
+            </div>
+        </div>
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+
+    {% endblock %}
+
+{% block table %}
+    {% set table = animal.animalTable  %}
+        <div class="tableBox">
+
+            {% include('animalTable/animalTable.html.twig') %}
+
+        </div>
+{% endblock %}
+
+{% block message %}
+    
+    {% if animal.class == "arachnids" %}
+        🕷️ 🦂 🕷️ O szczegółową ofertę dotyczącą pajęczaków prosimy pytać w sklepie 🕷️ 🦂 🕷️ 
+
+        
+    {% elseif animal.class == "mantises" %}
+
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+    
+{% endblock %}
+

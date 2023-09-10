@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  	<title>Gekota Admin Panel</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="{{asset('build/admin.css')}}">
+  </head>
+  <body>
+		
+		<div class="wrapper d-flex align-items-stretch">
+			<nav id="sidebar">
+				<div class="custom-menu" style="z-index:5">
+					<button type="button" id="sidebarCollapse" class="btn btn-primary">
+	          <i class="fa fa-bars" style="color:#f8f9fa"></i>
+	          <span class="sr-only">Toggle Menu</span>
+	        </button>
+        </div>
+
+	  		<h1><a href="{{path('default_index')}}" class="logo">Gekota</a></h1>
+        <ul class="list-unstyled components mb-5">
+          <li {% if ( app.request.pathinfo == '/admin') %} class="active" {% endif %} >
+            <a href="{{path('admin_index_show')}}"><span class="fa fa-home mr-3"></span> Panel admina </a>
+          </li>
+          <li {% if ('/admin/animals' in app.request.pathinfo) %} class="active" {% endif %}>
+              <a href="{{path('admin_animals_show', {'class' : 'lizards'})}}"><span class="fa fa-paw mr-3"></span> Zwierzaki </a>
+          </li>
+          <li {% if ('/admin/blog' in app.request.pathinfo) %} class="active" {% endif %}>
+            <a href="{{path('admin_blog_show')}}"><span class="fa fa-caret-square-o-right mr-3"></span> Blog </a>
+          </li>
+          <li {% if ('/admin/events' in app.request.pathinfo) %} class="active" {% endif %}>
+            <a href="{{path('admin_events_show')}}"><span class="fa fa-calendar mr-3"></span> Wydarzenia </a>
+          </li>
+          <li {% if ('/admin/galleries' in app.request.pathinfo) %} class="active" {% endif %}>
+            <a href="{{path('admin_galleries_show')}}"><span class="fa fa-image mr-3"></span> Galerie </a>
+          </li>
+          <li {% if ('/admin/images' in app.request.pathinfo) %} class="active" {% endif %}>
+            <a href="{{path('admin_images_show')}}"><span class="fa fa-image mr-3"></span> Zdjęcia </a>
+          </li>
+          <li {% if ('/admin/users' in app.request.pathinfo) %} class="active" {% endif %}>
+            <a href="{{path('admin_users_show')}}"><span class="fa fa-users mr-3"></span> Użytkownicy </a>
+          </li>
+          <li>
+            <a href="{{path('app_logout')}}" style="position:absolute;bottom:0;min-width: 250px;max-width: 250px;"><span class="fa fa-sign-out mr-3"></span> Wyloguj {{ app.user.nickname }} </a>
+          </li>
+          
+        </ul>
+    	</nav>
+
+        <!-- Page Content  -->
+      <div id="content" class="p-5 p-md-5 pt-5 bg-dark text-light" style="position:relative">
+        {% for message in app.flashes('notice') %}
+          <div class="flashBar px-3">
+            {{ message }}
+            <input type="button" value="x" class="deleteFlashButton float-right" style="width:20px;" />
+          </div>
+        {% endfor %}
+        {% for message in app.flashes('remove') %}
+          <div class="flashBar px-3">
+            {{ message }}
+            <input type="button" value="x" class="deleteFlashButton float-right" style="width:20px;" />
+          </div>
+        {% endfor %}
+        <div class="pt-4 row h-100">
+          {% block content %}
+              <div class="col-8 px-0 h-100 overflow-auto">
+                {% block main %}
+
+                {% endblock %}
+              </div>
+              
+              <div class="col-4 h-100 overflow-auto">
+
+                {% block sidebar %}
+                  
+                {% endblock %}
+
+              </div>
+          {% endblock %}
+        </div>
+      </div>
+		</div>
+
+    {% block assets %}
+      <script src="{{ asset('js/jquery.min.js') }}"></script>
+      <script src="{{asset('js/main.js')}}"></script>
+      <script src="{{asset('js/bootstrap.min.js')}}"></script>
+      <script src="{{asset('js/close-flash.js')}}"></script>
+      {% if (selectedAnimal is defined and selectedAnimal) or (selectedPost is defined and selectedPost) %}
+        <script src="{{asset('js/sidebar-utils.js')}}" ></script>
+      {% endif %}
+      {% if (selectedEvent is defined and selectedEvent) %}
+        <script
+          async
+          crossorigin="anonymous"
+          src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v13.0"
+          nonce="mYZJgLtX"
+        ></script>
+      {% endif %}
+    {% endblock %}
+  </body>
+</html>
+

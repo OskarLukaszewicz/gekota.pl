@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+  {% block background %}
+    <div
+      class="p-5 text-center bg-image d-none d-sm-flex"
+      style="
+        background-image: url('{% block backgroundUrl %}{% endblock %}');
+        height: 280px;
+        border-bottom: 1px solid rgb(133, 184, 30);
+      "
+    >
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.2)">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div>
+            <h2 class="gekotaHeading">{% block backgroundHeader %}{% endblock %}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="p-5 text-center bg-image d-flex d-sm-none"
+      style="
+        background-image: url('{% block backgroundUrlMobile %}{% endblock %}');
+        height: 280px;
+        border-bottom: 1px solid rgb(133, 184, 30);
+      "
+    >
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.2)">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="headingMobile">
+            <h2 class="gekotaHeading">{{ block("backgroundHeader") }}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+
+  {% block main %}
+  {% endblock %}
+{% endblock %}

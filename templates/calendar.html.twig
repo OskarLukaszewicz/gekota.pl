@@ -1,0 +1,88 @@
+{% extends 'layout.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+     <script
+      async
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v13.0"
+      nonce="mYZJgLtX"
+    ></script>
+    
+{% endblock %}
+
+{% block description %} Lista najbliższych wydarzeń, na których pojawi się Gekota. Serdecznie zapraszamy wszystkich do uczestnictwa {% endblock %}
+{% block title %}Gekota &#8211; kalendarz giełd terrarystycznych Polska Czechy{% endblock %}
+
+{% block backgroundUrl %}{{ asset("images/kategoriaKalendarz.jpg") }}{% endblock %}
+{% block backgroundHeader %}Kalendarz{% endblock %}
+{% block backgroundUrlMobile %}{{ asset("images/kategoriaKalendarzMobile.jpg") }}{% endblock %}
+
+
+{% block main %}
+    <main>
+      <section>
+        <div class="containter pt-3">
+          <div class="row px-3 text-start py-5 gx-0">
+            <div class="offset-lg-2 col-lg-8">
+              <div>
+                <header>
+                  <h1 class="sectionHeader pb-2">
+                    Kalendarz giełd terrarystycznych 2022 -
+                  </h1>
+                </header>
+                <h2 class="sectionHeader pb-2">gdzie nas znaleźć?</h2>
+              </div>
+
+              <div>
+                <p class="wpis">
+                  Sklep Gekota pojawia się na wielu giełdach terrarystycznych na
+                  terenie Polski i nie tylko. Serdecznie zapraszamy wszystkich
+                  pasjonatów zwierząt egzotycznych do uczestnictwa. Istnieje
+                  możliwość rezerwacji zwierząt do odbioru na wydarzeniu jako
+                  bezpieczna forma transportu. Zachęcamy do kontaktu:
+                  <a class="item" href="tel:510 343 168">510 343 168</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        {% for event in events %}
+        <div
+            class="row px-3 text-start py-5 align-items-center oddElement gx-0"
+          >
+            <div class="col-5 col-sm-3 offset-lg-2 col-lg-2">
+              <h3>{{event.date|date("d/m/Y") }}</h3>
+            </div>
+            <div class="col-5 col-md-3 col-lg-2"><h3>{{event.city}}</h3></div>
+
+            {% if event.source %}
+              <div class="col-12 col-md-5 col-lg-3 text-start text-lg-end">
+                <div
+                  class="fb-page facebookCallendarPlugin"
+                  data-href="{{ event.source }}"
+                  data-tabs=""
+                  data-width=""
+                  data-height=""
+                  data-small-header="true"
+                  data-adapt-container-width="true"
+                  data-hide-cover="false"
+                  data-show-facepile="true"
+                >
+                  <blockquote
+                    cite="{{ event.source }}"
+                    class="fb-xfbml-parse-ignore"
+                  >
+                    <a
+                      href="{{ event.source }}"
+                      ></a
+                    >
+                  </blockquote>
+                </div>
+              </div>
+            {% endif %}
+
+          </div>
+        {% endfor %}
+        </section>
+    </main>
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'offerList/layout.html.twig' %}
+
+{% block description %}W ofercie {% for animal in animals %}{{animal.commonName}} {{animal.spieces}}, {% endfor %} {% endblock %}
+{% block title %}
+    Sklep Gekota &#8211; oferta kategorii {% if animals[0] is defined %} {{ categories[animals[0].class].name }} {% else %} zwierzaki {% endif %}
+{% endblock %}
+
+{% block images %}
+    {% set imagesList = animal.getOfferListImages %}
+    {% if imagesList|length > 1 %}
+        <div class="row px-1 py-1 py-xl-2 g-2 gx-xl-3">
+            <div class="col">
+                <div>
+                    <a href="{{path('product_show', {'class':animal.class, 'product': animal.spieces|replace({" ":"-"}) } ) }}">
+                        <img
+                            src="{{asset('images/'~imagesList[0])}}"
+                            class="galleryPhoto"
+                            alt="{{ animal.commonName }} {{ animal.spieces }}"
+                        />
+                    </a>
+                </div>
+            </div>
+
+            <div class="col d-none d-md-block">
+                <div>
+                    <a href="{{path('product_show', {'class':animal.class, 'product': animal.spieces|replace({" ":"-"}) } ) }}">
+                        <img
+                            src="{{asset('images/'~imagesList[1])}}"
+                            class="galleryPhoto"
+                            alt="{{ animal.commonName }} {{ animal.spieces }}"
+                        />
+                    </a>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    {% if imagesList|length == 1 %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block table %}
+    {% for animal in animals %}
+    {% set table = animal.animalTable  %}
+        <div class="tableBox tableHidden" id="{{animal.id}}Table">
+            
+            {% include('animalTable/animalTable.html.twig') %}
+
+        </div>
+    
+    {% endfor %}
+
+{% endblock %}
+
+{% block message %}
+
+    {% if animals[0] is defined and animals[0].class == "arachnids" %}
+        🕷️ 🦂 🕷️ O szczegółową ofertę dotyczącą pajęczaków prosimy pytać w sklepie 🕷️ 🦂 🕷️ 
+    {% elseif animals[0] is defined and animals[0].class == "mantises" %}
+
+    {% else %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block arachnids %}
+    {% if animals[0] is defined and animals[0].class == "arachnids" %}
+    <div class="row">
+        <div class="sekcjaOfertowa activeSection col-12">
+            <div class="row">
+                <header>
+                    <h2 class="sectionHeader col-lg-12">ptaszniki</h2>
+                </header>
+                <h5 class="sectionSubHeader pb-3">różne gatunki</h5>
+            </div>
+            <div class="row px-1 py-1 py-xl-2 g-2 gx-xl-3">
+                <div class="offset-md-4 col col-md-4">
+                    <div>
+                        <a
+                            href="{{asset('images/ptaszniki.jpg')}}"
+                            data-lightbox="ptaszniki"
+                            data-title="ptasznik"
+                        >
+                            <img
+                                src="{{asset('images/ptaszniki.jpg')}}"
+                                class="galleryPhoto"
+                                alt="ptasznik"
+                            />
+                        </a>
+                    </div>
+                </div>
+                <p>
+                    W ofercie posiadamy wiele gatunków należących do rodziny
+                    ptasznikowatych. Ze względu na duży wybór i częste zmiany w
+                    liście gatunków - zachęcamy do
+                    <a href="{{path("contact_show")}}">kontaktu </a>w celu zapoznania się ze
+                    szczegółami.
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
+
+{%  block main %}
+    {{ parent() }}
+{% endblock %}

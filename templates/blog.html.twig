@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+
+{% block description %} Witaj na blogu Gekota - źródle informacji o zwierzętach egzotycznych i wydarzeniach z życia naszej firmy! {% endblock %}
+{% block title %} Gekota &#8211; blog{% endblock %}
+
+{% block backgroundUrl %}{{asset('images/kategoriaBlog.jpg')}}{% endblock %}
+{% block backgroundHeader %}Blog{% endblock %}
+{% block backgroundUrlMobile %}{{asset('images/kategoriaBlog.jpg')}}{% endblock %}
+
+{% block main %}
+    <main>
+        <div class="blogContainer">
+            {% for post in blogPosts %}
+                
+                <div class="col-md-10 offset-md-1 col-xl-8 offset-xl-2 row postContainer">
+
+                    <div class="postTitle d-block d-md-none">
+                        <a href="{{path('blog_post_show', {'slug': post.slug })}}">
+                            <h3 class="d-inline-block">
+                                {{post.title}}
+                            </h3>
+                        </a>
+                    </div>
+
+                    <div class='col-12 col-md-3 col-xl-3 postImageContainer'>
+                        <a href="{{asset('images/'~post.PostFrontImage)}}" data-lightbox="{{post.id}}" data-title="{{post.title}}">
+                            <div class="postImage">
+                                <img class="postImg" src="{{asset('images/'~post.PostFrontImage)}}" alt="{{ post.PostFrontImage.figcaption }}">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class='col-12 col-md-9 col-xl-9'>
+                        <div class="postTitle d-none d-md-block">
+                            <a href="{{path('blog_post_show', {'slug': post.slug })}}">
+                                <h3 class="d-inline-block">
+                                    {{post.title}}
+                                </h3>
+                            </a>
+                        </div>
+                        <div class="postContent pt-2">
+                            {{ ((post.content|length > 230) or (post.BlogPostGallery|length > 1)) ? ((post.content | slice(0, 230)~'... <a href="'~path('blog_post_show', {'slug': post.slug })~'">Zobacz więcej</a>')|raw) : post.content }}
+                            
+                        </div>
+                    </div>
+
+                    <span class="postBar">{{post.createdAt|date("d/m/Y")}} | {{ post.author.nickname }}</span>
+                </div>
+                <hr />
+            {% endfor %}
+        </div>
+    </main>
+{% endblock %}
+    

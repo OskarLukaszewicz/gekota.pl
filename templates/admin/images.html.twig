@@ -1,0 +1,37 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block main %}
+
+    <div class="p-3">
+        {{ render(controller(
+            'App\\Controller\\Admin\\ImageCrudController::imageAction', {action : "create"}
+        )) }}
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+<div >
+    <a class="w-100" href="{{path('admin_images_show', { show : not show })}}"><input class="w-100" type="button" value="{% if show %} Ukryj zdjęcia {% else %} Pokaż zdjęcia {% endif %}" /></a>
+
+    {% if show %}
+        {{ render(controller(
+            'App\\Controller\\Admin\\ImageCrudController::showImages', {excludedIds : excludedIds, parentTemplate : 'images.html.twig'}
+        )) }}
+    {% endif %}
+
+</div>
+    
+
+{% endblock %}
+
+{% block assets %}
+
+    {{ parent() }}
+    <script src="{{asset('js/modal.js')}}"></script>
+    {% if show %}
+        <script src="{{asset('js/search-bar.js')}}" ></script>
+    {% endif %}
+    
+    
+{% endblock %}

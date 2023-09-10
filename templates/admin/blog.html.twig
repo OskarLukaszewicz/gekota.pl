@@ -1,0 +1,159 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% set flag = app.flashes('remove2') %}
+
+{% block main %}
+
+    <h1 class="sectionHeader d-none">
+        Blog
+    </h1>
+
+    {% if selectedPost %}
+        <div id="addImageTab" class="d-none h-100">
+            {{ render(controller(
+                'App\\Controller\\Admin\\ImageCrudController::showImages', {excludedIds : excludedIds, action : ('/admin/relation/action/add/BlogPost/' ~ selectedPost.id ~ '/image'), parentTemplate : 'blog.html.twig', search : search}
+            )) }}
+        </div>
+    {% endif %}
+    <div id="itemListTab">
+        <div class='d-flex align-items-end'>
+            <h1 class="sectionHeader w-25">
+                Blog
+            </h1>
+            
+            <h4 class="sectionHeader w-50 ml-auto p-1">
+                <button class="w-100 m-0">
+                    <a href="{{path('admin_blog_action', {'action' : "create" })}}">
+                        Dodaj post
+                    </a>
+                </button>
+            </h4>
+        </div>
+
+        <div class="contentNav row m-0">
+            <span class="col-6">Tytuł:</span>
+        
+    
+            <span class="col-4 pl-2">Nagłówek:</span>
+
+    
+            <span class="col-2 pl-2">Data:</span>
+        </div>
+        <div>
+            <ul class="list-unstyled components">
+                {% for post in blogPosts %}
+                    <li class="contentItemContainer">
+                        <div class="row m-0 align-items-center d-flex contentItem blogItem {% if post.slug|replace({" ":"-"}) == slug %}itemActive{% endif %}">
+                            <div class="col-6 h-100">
+                                <a href="{{ path('admin_blog_show', {'slug' : post.slug|replace({" ":"-"})}) }}" class="d-flex align-items-center" {% if post.slug|replace({" ":"-"}) == slug %} class="d-flex align-items-center itemActive" {% endif %}>
+                                    {{ post.title }}
+                                </a>
+                            </div>
+                            <div class="col-4 h-100 p-0 pl-2 d-flex align-items-center">
+                                {{post.slug}}
+                            </div>
+                            <div class="col-2 h-100 p-0 pl-2 d-flex align-items-center">
+                                {{post.createdAt|date("m/d/Y")}}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+
+    {% if selectedPost %}
+
+        <div class="row">
+            <button id="addImage" class="col-4">Dodaj zdjęcie</button>
+
+            <button class="col-4">
+                <a href="{{path('admin_blog_action', {'action' : "update", id : selectedPost.id })}}">
+                    Edytuj
+                </a>
+            </button>
+            <button class="col-4">
+                <a href="{{path('admin_blog_action', {'action' : "remove", id : selectedPost.id})}}" class="deleteButton">
+                    Usuń
+                </a>
+            </button>
+        </div>
+        <div class="row sidebarContainer border border-dark">
+            <div class="col-12 text-center" >
+                <h4 class="text-light mt-3 mb-2 ml-2">{{ selectedPost.title }}</h4>
+                {% for image in selectedPost.images %}
+                    {% if image.postFrontImage %}
+                        <div class="col-12 p-1 mb-2"> 
+                            <img src={{ asset('images/'~image) }} class="primaryProductImage rounded mx-auto"> </img> 
+                            <form action="{{ path('admin_relation_action', {'action' : 'remove', oneToManyEntity : "BlogPost", oneToManyEntityId : selectedPost.id, manyToOneEntity : "Image"}) }}" method="post">
+                                <input type="hidden" name="ids" value="{{image.id}}">
+                                <input type="submit" value="x" class="deleteXButton">
+                            </form>
+                        </div> 
+                    {% endif %}
+                {% endfor %}
+                
+                <div class="sidebarMenuButtons row">
+                    <button class="menuTab col-6 {% if not flag %}itemActive{% endif %}" data-tab-name="info">Informacje</button>
+                    <button class="menuTab col-6 {% if flag %}itemActive{% endif %}" data-tab-name="images">Zdjęcia</button>
+                </div>
+            </div>
+            <div class='infoContainer itemTab {% if flag %}d-none{% endif %}'>
+                <div class="row p-1 m-1">
+                    <div class="col-5">Tytuł: </div>
+                    <div class="col-7">{{selectedPost.title}} </div>
+                    <div class="col-5">Nagłówek: </div>
+                    <div class="col-7">{{selectedPost.slug}} </div>
+                    <div class="col-5">Autor: </div>
+                    <div class="col-7">{{selectedPost.author.nickname}} </div>
+                    <div class="col-5">Data utworzenia: </div>
+                    <div class="col-7">{{selectedPost.createdAt|date("m/d/Y")}} </div>
+                    <div class="col-12">Treść: </div>
+                    <div class="col-12">{{selectedPost.content}} </div>
+                </div>
+            </div>
+            <div class="imageContainer itemTab p-0 {% if not flag %}d-none{% endif %}">
+                <div class="row m-0 ">
+                    {% for image in selectedPost.images %}
+                        {% if not image.postFrontImage %}
+                            <div class="row m-0 p-1 imageItem">
+                                <div class="imageContainer col-6 p-0">
+                                    <img src={{ asset('images/'~image) }} class="secondaryProductImage"> 
+                                    </img>
+                                </div>
+                                <div class="formContainer col-6 p-0 row m-0">
+                                    <div class="col-12 p-0 align-items-end d-flex justify-content-center h-25">
+                                        <span>
+                                            {{image.figcaption}}
+                                        </span>
+                                    </div>
+                                    <form class="col-6 p-0 d-flex align-items-start h-75" action="{{ path('admin_blog_action', {'action' : 'makeFront', 'id' : selectedPost.id}) }}" method="post">
+                                        <input type="hidden" name="imageId" value="{{image.id}}">
+                                        <input class="w-100" type="submit" value="Front">
+                                    </form>
+                                    <form class="col-6 p-0 d-flex align-items-start h-75" action="{{ path('admin_relation_action', {'action' : 'remove', 'id' : selectedPost.id, oneToManyEntity : "BlogPost", oneToManyEntityId : selectedPost.id, manyToOneEntity : "Image"}) }}" method="post">
+                                        <input type="hidden" name="ids" value="{{image.id}}">
+                                        <input class="w-100" type="submit" value="Usuń">
+                                    </form>
+                                    
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    
+{% endblock %}
+
+{% block assets %}
+
+    {{ parent() }}
+    <script src="{{asset('js/modal.js')}}"></script>
+    <script src="{{asset('js/search-bar.js')}}" ></script>
+    
+{% endblock %}

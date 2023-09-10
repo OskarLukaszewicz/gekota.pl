@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% set sectionName = gallery.sectionName %}
+
+{% block backgroundUrl %}{{ asset("images/kategoriaGaleria.jpg") }}{% endblock %}
+{% block backgroundHeader %}
+  Galeria
+{% endblock %}
+{% block backgroundUrlMobile %}{{ asset("images/kategoriaGaleriaMobile.jpg") }}{% endblock %}
+
+{% block description %} Galeria zdjęć, sklep Gekota, Poznań{% endblock %}
+{% block title %}Galeria zdjęć{% endblock %}
+
+{% block main %}
+<main>
+    <section>
+        <div class="containter">
+          <div class="sekcja">
+            <div class="row offset-xl-1 col-xl-10 px-3">
+
+              <header>
+                <h1 class="sectionHeader pb-5">
+                  {% if sectionName == "animals" %}
+                    Zwierzaki
+                  {% elseif sectionName == "shop" %}
+                    Nasz sklep
+                  {% elseif sectionName == "terrariums" %}
+                    Aranżacje terrariów
+                  {% endif %}
+                </h1>
+              </header>
+
+              {% if images[0] is defined %}
+
+              {% for image in images %}
+                <div class="col-6 col-md-3 col-xl-3">
+                  <figure>
+                      <a
+                        href="{{asset('images/'~image)}}"
+                        data-lightbox="gallery"
+                        data-title="Galeria"
+                      >
+                        <img src="{{asset('images/'~image)}}" class="galleryPhoto" alt="{{ image.figcaption }}">
+                      </a>
+                    <figcaption>{{ image.figcaption }}</figcaption>
+                  </figure>
+                </div>
+              {% endfor %}
+
+              {% else %}
+                <h5 class="py-5 mb-0">Galeria w trakcie przygotowań...</h5>
+                <i class="fas fa-spider pb-5 fa-3x"></i>
+              {% endif %}
+
+            </div>
+          </div> 
+        </div>
+    </section>
+  </main>
+{% endblock %}

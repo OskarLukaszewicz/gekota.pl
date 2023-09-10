@@ -1,0 +1,50 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block main %}  
+
+    <h1 class="sectionHeader px-4 mx-1">
+        Galerie
+    </h1>
+    <div class="col-12 px-1">
+        <div class="contentNav d-flex">
+            {% for key, gallery in galleries %}
+                <a href="{{path('admin_gallery_show', {'sectionName' : key})}}" {% if sectionName == key %} class="itemActive text-center" {% endif %} class="text-center" >
+                    {{ gallery }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="row m-0">
+        {% for image in images %}
+            <div class="col-3 p-1">
+                <img src={{ asset('images/'~image) }} class="secondaryProductImage">
+                <form action="{{ path('admin_relation_action', {'action' : 'remove', oneToManyEntity : "Gallery", oneToManyEntityId : gallery.id, manyToOneEntity : "Image"}) }}" method="post">
+                    <input type="hidden" name="ids" value="{{image.id}}">
+                    <input type="submit" value="x" class="deleteXButton">
+                </form>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+{% block sidebar %}
+    
+        {% if sectionName %}
+            
+            {{ render(controller(
+                'App\\Controller\\Admin\\ImageCrudController::showImages', {excludedIds : excludedIds, action : ('/admin/relation/action/add/Gallery/' ~ gallery.id ~ '/image'), parentTemplate : 'galleries.html.twig', search : search}
+            )) }}
+
+        {% endif %}
+
+{% endblock %}
+
+{% block assets %}
+
+    {{ parent() }}
+    <script src="{{asset('js/search-bar.js')}}" ></script>
+    
+{% endblock %}
+    

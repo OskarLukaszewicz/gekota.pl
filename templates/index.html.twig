@@ -1,0 +1,273 @@
+{% extends 'layout.html.twig' %}
+
+{%block voidTop%}<div class="gora d-none d-md-flex"></div>{%endblock%}
+{% block description %}W ofercie posiadamy liczne gatunki zwierząt egzotycznych: jaszczurki, węże, pajęczaki, żółwie, modliszki, płazy i inne. Zapraszamy!{% endblock %}
+{% block title %}Gekota &#8211; sklep terrarystyczny Poznań. Zwierzęta egzotyczne.{% endblock %}
+
+{% block background %}
+<!-- BACKGROUND MAIN -->
+    <div
+      class="p-5 text-center bg-image d-md-none"
+      style="
+        background-image: url('{{asset('images/felsuma.jpg')}}');
+        height: 100vh;
+        border-bottom: 1px solid rgb(133, 184, 30);
+      "
+    >
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.05)">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="headingMobile">
+            <h2 class="mb-1 gekotaHeading">GEKOTA</h2>
+            <header>
+              <h1 class="mb-3 subHeading">Sklep terrarystyczny</h1>
+            </header>
+            <a href="{{path("offer_show")}}"
+              ><button
+                type="button"
+                class="mb-4 btn btn-outline-light btn-rounded subHeading"
+              >
+                Oferta <i class="fas fa-arrow-circle-right"></i></button
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="p-5 text-center bg-image d-none d-md-flex"
+      style="
+        background-image: url('{{asset('images/gargulec.jpg')}}');
+        height: 90vh;
+        border-bottom: 1px solid rgb(133, 184, 30);
+      "
+    >
+      <div class="mask" style="background-color: rgba(0, 0, 0, 0.2)">
+        <div class="d-flex justify-content-center align-items-center h-100">
+          <div class="mb-5 pb-5">
+            <h2 class="mb-2 gekotaHeading">GEKOTA</h2>
+            <header>
+              <h1 class="mb-3 subHeading">Sklep terrarystyczny</h1>
+            </header>
+            <a href="{{ path("offer_show") }}"
+              ><button
+                type="button"
+                class="mt-3 btn btn-outline-light btn-rounded subHeading"
+                style="font-size: calc(10px + 0.4vw)"
+              >
+                Oferta <i class="fas fa-arrow-circle-right"></i></button
+            ></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- BACKGROUND MAIN END -->
+    {% endblock %}
+
+{% block main %}
+    <main>
+      <section id="jumpLink1">
+        <div class="containter">
+          <!-- AKTUALNOSCI -->
+
+          <!-- <div class="aktualnosci">
+            🦗🦗🦗 Dostawa owadów karmowych w każdy wtorek po godzinie 14:00 🦗 szarańcza wędrowna w czwartek od 11:00 🦗🦗🦗
+          </div>
+
+          <div class="aktualnosci">
+            <img src="nowosciImg/dostawa_owadow.jpg" class=" d-sm-inline-block d-none" alt="gekota 29.06.2022" height="400px">
+            <img src="nowosciImg/dostawa_owadow.jpg" class="d-inline-block d-sm-none" alt="gekota 29.06.2022" height="250px">
+          </div> -->
+
+          <!-- NEWS -->
+
+          <div class="sekcja">
+            <h2 class="sectionHeader pb-5">Nowości</h2>
+
+            <div class="row px-3 mx-0">
+
+              <div class="col-xl-2"></div>
+              {% for animal in animals %}
+                <div class="col-sm-6 col-md-3 col-xl-2">
+                  <figure>
+                    <a
+                      href="offer/{{ animal.class }}/{{ animal.spieces }}"
+                      target="_blank"
+                      class="text-white"
+                      ><img
+                        src="{{asset("images/" ~ animal.getNewsImg)}}"
+                        class="galleryPhoto"
+                        alt="{{ animal.commonName }} {{ animal.spieces }}"
+                      />
+                      <h4>
+                        <figcaption class="mt-2 nowosciLink">
+                          {{ animal.commonName }} <br />
+                          <i> {{ animal.spieces }} </i>
+                        </figcaption>
+                      </h4>
+                    </a>
+                  </figure>
+                </div>
+              {% endfor %}
+              </div>
+
+              <div class="row px-3 mx-0">
+
+                <div class="col-xl-2"></div>
+                {% for animal in animals2 %}
+                  <div class="col-sm-6 col-md-3 col-xl-2">
+                    <figure>
+                      <a
+                        href="offer/{{ animal.class }}/{{ animal.spieces }}"
+                        target="_blank"
+                        class="text-white"
+                        ><img
+                          src="{{asset("images/" ~ animal.getNewsImg)}}"
+                          class="galleryPhoto"
+                          alt="{{ animal.commonName }} {{ animal.spieces }}"
+                        />
+                        <h4>
+                          <figcaption class="mt-2 nowosciLink">
+                            {{ animal.commonName }} <br />
+                            <i> {{ animal.spieces }} </i>
+                          </figcaption>
+                        </h4>
+                      </a>
+                    </figure>
+                  </div>
+                {% endfor %}
+
+              </div>
+          </div>
+
+          <!-- NEWS END -->
+
+          <!-- ABOUT US -->
+
+          <div class="row d-flex align-items-center sekcja px-3 mx-0">
+            <div class="col-md-6 col-xl-7 offset-xl-1">
+              <h2 class="sectionHeader pb-2">O nas</h2>
+              <p>
+                Jesteśmy osobami, które są zakręcone na punkcie terrarystyki. Od
+                lat sami hodujemy zwierzęta egzotyczne począwszy od modliszek,
+                poprzez pajęczaki, a skończywszy na różnych kręgowcach. Jako
+                doświadczeni terraryści mamy na koncie liczne sukcesy hodowlane.
+                Wykształcenie w kierunku szeroko rozumianej biologii i ekologii
+                środowiska pomaga nam jeszcze lepiej zrozumieć świat tych
+                niesamowitych zwierząt. Dbamy o profesjonalizm, dlatego zależy
+                nam, aby każda osoba odwiedzająca nasz sklep otrzymała zawsze
+                pełną i rzetelną informacje o potrzebach danego zwierzaka.
+                Ponadto zajmujemy się profesjonalną aranżacją i projektowaniem
+                zbiorników, które potrafią być prawdziwą ozdobą każdego
+                pomieszczenia.
+              </p>
+              <h5>
+                Firma GEKOTA chce dzielić wraz z Wami pasje do terrarystyki.
+              </h5>
+            </div>
+
+            <div class="offset-sm-3 offset-md-0 col-sm-6 col-xl-3">
+              <img
+                src="{{asset('images/orzesiony1.jpg')}}"
+                class="articlePhoto"
+                alt="gekon orzęsiony"
+              />
+            </div>
+          </div>
+
+          
+  
+          <!-- Weterynarze -->
+
+          <div class="sekcja">
+            <h2 class="sectionHeader pb-5">Polecani weterzynarze</h2>
+
+            <div class="row gx-5 px-5 gy-5 pb-5 mx-0">
+              <div class="col offset-xl-1">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Przychodnia Weterynaryjna Ryś</p>
+                    <h6 class="card-title">
+                      lek. wet. Oliwia Czyżykowska-Kubik
+                    </h6>
+                    <p class="card-text">Adres: Podgórna 5, 64-920 Piła</p>
+                    <a
+                      rel="nofollow"
+                      href="https://www.przychodniarys.pl/kontakt"
+                      class="item googleIcon"
+                      target="_blank"
+                      ><i class="fab fa-google"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Klinika Weterynaryjna SKVet</p>
+                    <h6 class="card-title">lek. wet. Grzegorz Dziwak</h6>
+                    <p class="card-text">
+                      Adres: Stabłowicka 109b, 54-062 Wrocław
+                    </p>
+                    <a
+                      rel="nofollow"
+                      href="https://www.skvet.pl/kontakt"
+                      class="item googleIcon"
+                      target="_blank"
+                      ><i class="fab fa-google"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Centrum Zdrowia Małych Zwierząt</p>
+                    <h6 class="card-title">M. Majka R. Starczewski</h6>
+                    <p class="card-text">
+                      Adres: Osiedle Władysława Jagiełły 33, 60-694 Poznań
+                    </p>
+                    <a
+                      rel="nofollow"
+                      href="http://www.klinikawet.pl/"
+                      class="item googleIcon"
+                      target="_blank"
+                      ><i class="fab fa-google"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col">
+                <div class="card">
+                  <div class="card-body">
+                    <p class="card-title">Gabinet Wterynaryjny "Kobra"</p>
+                    <h6 class="card-title">Lek. wet. Hanna Lisiecka-Kozieł</h6>
+                    <p class="card-text">
+                      Adres: Międzyborska 67, 60-162 Poznań
+                    </p>
+                    <a
+                      rel="nofollow"
+                      href="http://kobrawet.pl/kontakt"
+                      class="item googleIcon"
+                      target="_blank"
+                      ><i class="fab fa-google"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-xl-1"></div>
+            </div>
+            
+          </div>
+
+          <div class="aktualnosci">
+            Zawarta na stronie oferta ma charakter informacyjny i nie stanowi
+            oferty handlowej w rozumieniu art. 66 §1 Kodeksu Cywilnego.
+          </div>
+        </div>
+      </section>
+    </main>
+{% endblock %}

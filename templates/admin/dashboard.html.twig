@@ -1,0 +1,62 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block content %}
+
+    Witaj {{ app.user.nickname }}
+
+    <div class="row">
+        <div>
+            <form action="{{ path('admin_dashboard_action') }}" method="post">
+                <input type="hidden" value="updateAnimalsValue" name="action">
+                <input type="number" name="value" min="1" max="9" value="{{config.animalsNum}}" class="numberInput">
+                <input type="submit" class="submitForNumberImput">
+            </form>
+        </div>
+        {% for animal in animals %}
+            animal
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div>
+            <form action="{{ path('admin_dashboard_action') }}" method="post">
+                <input type="hidden" value="updatePostsValue" name="action">
+                <input type="number" name="value" min="1" max="9" value="{{config.blogPostsNum}}" class="numberInput">
+                <input type="submit" class="submitForNumberImput">
+            </form>
+        </div>
+        {% for post in posts %}
+            Post
+        {% endfor %}
+    </div>
+
+    <div class="row">
+        <div>
+            <form action="{{ path('admin_dashboard_action') }}" method="post">
+                <input type="hidden" value="updateEventsValue" name="action">
+                <input type="number" name="value" min="1" max="9" value="{{config.eventsWeeksNum}}" class="numberInput">
+                <input type="submit" class="submitForNumberImput">
+            </form>
+        </div>
+        {% for event in events %}
+            event
+        {% endfor %}
+    </div>
+
+    <div>
+        <form action="{{ path('admin_dashboard_action') }}" method="post">
+            <input type="hidden" value="updateNotesValue" name="action">
+            <input type="text" value="{{config.notes}}" name="value">
+            <input type="submit">
+        </form>
+    </div>
+
+    {{ dump(chart) }}
+    <div style="height: 300px;">
+        {{ render_chart(chart) }}
+    </div>
+
+
+
+
+{% endblock %}

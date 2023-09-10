@@ -1,0 +1,111 @@
+{% extends 'admin/layout.html.twig' %}
+
+    {% block main %}
+        <div id="itemListTab">
+            <div class='d-flex align-items-end'>
+                <h1 class="sectionHeader">
+                    Wydarzenia
+                </h1>
+                
+                <h4 class="sectionHeader w-50 ml-auto p-1">
+                    <button class="w-100 m-0">
+                        <a href="{{path('admin_events_action', {'action' : "create" })}}">
+                            Dodaj wydarzenie
+                        </a>
+                    </button>
+                </h4>
+            </div>
+
+            <div class="contentNav row m-0">
+                <span class="col-10">Miejscowość:</span>
+                <span class="col-2 pl-2">Data:</span>
+            </div>
+            <div>
+                <ul class="list-unstyled components">
+                    {% for event in events %}
+                        <li class="contentItemContainer">
+                            <div class="row m-0 align-items-center d-flex contentItem blogItem {% if event.id == id %}itemActive{% endif %}">
+                                <div class="col-10 h-100">
+                                    <a href="{{ path('admin_events_show', {'id' : event.id}) }}" class="d-flex align-items-center" {% if event.id == id %} class="d-flex align-items-center itemActive" {% endif %}>
+                                        {{ event.city }}
+                                    </a>
+                                </div>
+                                <div class="col-2 h-100 p-0 pl-2 d-flex align-items-center">
+                                    {{event.date|date("d/m/Y")}}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block sidebar %}
+
+        {% if selectedEvent %}
+        
+            <div class="row">
+                <button class="col-6">
+                    <a href="{{path('admin_events_action', {'action' : "update", id : selectedEvent.id })}}">
+                        Edytuj
+                    </a>
+                </button>
+                <button class="col-6">
+                    <a href="{{path('admin_events_action', {'action' : "remove", id : selectedEvent.id})}}" class="deleteButton">
+                        Usuń
+                    </a>
+                </button>
+            </div>
+            <div class="row sidebarContainer border border-dark">
+                <div class="col-12 text-center" >
+                    <h4 class="text-light mt-3 mb-2 ml-2">{{ selectedEvent.city }}</h4>
+    
+                    <div class="sidebarMenuButtons row">
+                        <button class="menuTab col-12 itemActive" data-tab-name="info">Informacje</button>
+                    </div>
+                </div>
+                <div class='infoContainer'>
+                    <div class="row p-1 m-1">
+                        <div class="col-5">Miasto: </div>
+                        <div class="col-7">{{selectedEvent.city}} </div>
+                        <div class="col-12">Link do wydarzenia: </div>
+                        <div class="col-12">
+                        <div
+                            class="fb-page facebookCallendarPlugin"
+                            data-href="{{ selectedEvent.source }}"
+                            data-tabs=""
+                            data-width=""
+                            data-height=""
+                            data-small-header="true"
+                            data-adapt-container-width="true"
+                            data-hide-cover="false"
+                            data-show-facepile="true"
+                            >
+                            <blockquote
+                                cite="{{ selectedEvent.source }}"
+                                class="fb-xfbml-parse-ignore"
+                            >
+                                <a
+                                href="{{ selectedEvent.source }}"
+                                ></a
+                                >
+                            </blockquote>
+                        </div>
+                    </div>
+                        <div class="col-5">Data utworzenia: </div>
+                        <div class="col-7">{{selectedEvent.date|date("m/d/Y")}} </div>
+                    </div>
+                </div>
+            </div>
+
+        {% endif %}
+        
+{% endblock %}
+
+{% block assets %}
+
+    {{ parent() }}
+    <script src="{{asset('js/modal.js')}}"></script>
+    
+{% endblock %}

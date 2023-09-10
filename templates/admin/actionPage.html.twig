@@ -1,0 +1,13 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block content %}
+
+    {% if app.request.getPathInfo == "/admin/images/action/create" %} 
+        {% form_theme form with ['bootstrap_5_layout.html.twig'] only %}
+    {% endif %}
+
+    {{ form(form) }}
+    
+{% endblock %}
+
+

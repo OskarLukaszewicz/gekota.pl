@@ -1,0 +1,158 @@
+{% extends 'base.html.twig' %}
+{% block head %}
+    {{ parent() }}
+    <script src="{{ asset('js/animalCard.js') }}" defer type="text/javascript"></script>
+{% endblock %}
+
+{% block content %}
+
+    {% block background %}
+        <div
+            class="p-5 text-center bg-image d-none d-sm-flex"
+            style="
+            background-image: url('{% if animals[0] is defined %} {{asset('images/' ~ categories[animals[0].class].filename)}} {% else %} {{asset('images/noImage.jpg')}} {% endif %}');
+            height: 280px;
+            border-bottom: 1px solid rgb(133, 184, 30);"
+        >
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.2)">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div>
+                        <h2 class="gekotaHeading">{% if animals[0] is defined %} {{ categories[animals[0].class].name }} {% endif %}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="p-5 text-center bg-image d-flex d-sm-none"
+            style="
+                {% if animals[0] is defined %} background-image: url(' {{asset('images/' ~ categories[animals[0].class].filename)}}'); {%endif%}
+                height: 280px;
+                border-bottom: 1px solid rgb(133, 184, 30);"
+        >
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.2)">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div class="headingMobile">
+                        <h2 class="gekotaHeading">{% if animals[0] is defined %}{{ categories[animals[0].class].name }}{% endif %}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <main>
+
+        {% block breadAndMessageBar %}
+            <div class="aktualnosci">
+                <nav aria-label="breadcrumb" class="d-inline-block">
+                    <ol class="breadcrumb m-0 p-1">
+                        <li class="breadcrumb-item">
+                            <a class="chlebek" href="/">Strona główna</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a class="chlebek" href="{{ path('offer_show') }}">Oferta</a>
+                        </li>
+                        <li class="breadcrumb-item active">{% if animals[0] is defined %}{{categories[animals[0].class].name}}{% endif %}</li>
+                    </ol>
+                </nav>
+                <div>
+                    {% block message %}
+                        🐢 🐍 🦎 Nie ma możliwości wysyłki zwierząt kręgowych pocztą ani
+                        kurierem 🦎 🐍 🐢
+                    {% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+
+        <div class="row gx-0">
+            <div
+                class="container col-0 col-xxl-1"
+                style="
+                background: linear-gradient(
+                    90deg,
+                    rgba(133, 184, 30, 0.1) 20%,
+                    rgba(2, 0, 36, 0) 100%
+                );">
+            </div>
+        
+            <div class="containter col-sm-6 col-lg-8 col-xxl-8">
+
+            {% block arachnids %}
+            
+        {% endblock %}
+
+                {% block main %}
+
+                    <!-- GATUNEK START -->
+                    {% for animal in animals %}
+
+                    {% if loop.index is not even %}
+                        <div class="row">
+                    {% endif %}
+
+                        <div
+                            class="sekcjaOfertowa activeSection col-12 col-xl-6"
+                            id="{{animal.id}}Table"
+                        >
+                            <article>
+                                <a href="{{path('product_show', {'class':animal.class, 'product': animal.spieces|replace({" ":"-"}) } ) }}">
+                                    <div class="row px-3 offerLink">
+                                        <header>
+                                            <h2 class="sectionHeader col-lg-12">
+                                                {{ animal.commonName }}
+                                            </h2>
+                                        </header>
+                                        <h5 class="sectionSubHeader pb-5">
+                                            {{animal.spieces}} {{ animal.price ~ "zł" }}
+                                        </h5>
+                                    </div>
+                                </a>
+
+                                {% block images %}
+                                    <div class="row px-1 py-1 py-xl-2 g-2 gx-xl-3">
+                                        <div class="offset-md-3 col col-md-6">
+                                            <div>
+                                                <a href="{{path('product_show', {'class':animal.class, 'product': animal.spieces|replace({" ":"-"}) } ) }}">
+                                                    <img
+                                                        src="{{asset('images/'~imagesList[0])}}"
+                                                        class="galleryPhoto"
+                                                        alt="{{ animal.commonName }} {{ animal.spieces }}"
+                                                    />
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endblock %}
+
+                            </article>
+                        </div>
+
+                    {% if loop.index is even or loop.index == loop.last %}
+                        </div>
+                    {% endif %}
+
+                    {% endfor %}
+
+                {% endblock %}
+
+            </div>
+            <div
+                class="d-none d-sm-block container col-sm-6 col-md-6 col-lg-4 col-xxl-3 ps-1"
+                style="
+                background: linear-gradient(
+                    270deg,
+                    rgba(133, 184, 30, 0.1) 20%,
+                    rgba(2, 0, 36, 0) 100%);"
+            >
+
+                {% block table %}
+                    
+                {% endblock %}
+
+            </div>
+        </div>
+    </main>
+
+    
+
+{% endblock %}

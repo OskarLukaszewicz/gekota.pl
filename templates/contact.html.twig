@@ -1,0 +1,50 @@
+{% extends 'layout.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+     <script
+      async
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v13.0"
+      nonce="mYZJgLtX"
+    ></script>
+    
+{% endblock %}
+
+{% block description %} e-mail : sklep@gekota.pl, Tel. 510 343 168, ul. Rynek Łazarski 16 (wejście od strony ulicy Dmowskiego, za kioskiem RUCHu, w przyziemiu) 60-733 Poznań {% endblock %}
+{% block title %}Kontakt &#8211; sklep Gekota{% endblock %}
+
+{% block background %}
+
+{% endblock %}
+
+{% block main %}
+
+    <main>
+      <div class="containter">
+        <div class="row d-flex align-items-center sekcja gx-0">
+          <div class="col-10 col-lg-4 offset-1">
+            <h2 class="sectionHeader pb-2">Gekota</h2>
+            <header><h1>Sklep terrarystyczny w Poznaniu</h1></header>
+              <address>
+                <p>ul. Rynek Łazarski 16 (wejście od strony ulicy Dmowskiego, za kioskiem RUCHu, w przyziemiu)</p> 
+                <p>60-733 Poznań</p>
+                <p><a class="item" href="tel:510 343 168">tel: 510 343 168</a></p>
+                <p ><a href="mailto:sklep@gekota.pl" class="item">e-mail: sklep@gekota.pl</a></p>
+                <h6 class="text-uppercase fw-bold mb-4">Godziny Otwarcia</h6>
+                <p>pn. - pt.  11:00 - 18:00</p>
+                <p>sob.  9:00 - 13:00</p>
+                <div class="fb-page facebookCallendarPlugin" data-href="https://www.facebook.com/gekotasklep" data-tabs="" data-width="" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/gekotasklep" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/gekotasklep">Gekota Specjalistyczny Sklep Zoologiczno-botaniczny</a></blockquote></div>
+              </address>
+            </div>
+
+          <div class="offset-1 col-10 offset-lg-0 col-lg-6 mt-3 mt-lg-0">
+            <div class="ratio ratio-16x9">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2434.699470282103!2d16.898808215995576!3d52.39399815331164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47045b2b2861cb83%3A0x498f09f080be0f94!2sGEKOTA!5e0!3m2!1spl!2spl!4v1648465562700!5m2!1spl!2spl" title="google localisation" style="border:0;"  allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'layout.html.twig' %}
+
+{% block description %}{{ post.content | slice(0, 80) }}{% endblock %}
+{% block title %}{{post.title}}{% endblock %}
+
+{% block backgroundUrl %}{{asset('images/kategoriaBlog.jpg')}}{% endblock %}
+{% block backgroundHeader %} {{post.title}} {% endblock %}
+{% block backgroundUrlMobile %}{{asset('images/kategoriaBlog.jpg')}}{% endblock %}
+
+{% set images = post.BlogPostGallery %}
+
+{% block main %}
+    <main>
+    {% block breadAndMessageBar %}
+        <div class="aktualnosci">
+            <nav aria-label="breadcrumb" class="d-inline-block">
+                <ol class="breadcrumb m-0 p-1">
+                    <li class="breadcrumb-item">
+                        <a class="chlebek" href="/">Strona główna</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a class="chlebek" href="{{ path('blog_list_show') }}">Blog</a>
+                    </li>
+                    <li class="breadcrumb-item active">{{post.slug | replace({'-': ' '}) }}</li>
+                </ol>
+            </nav>
+        </div>
+    {% endblock %}
+        <div class="blogContainer">
+            <div class="col-md-10 offset-md-1 col-xl-8 offset-xl-2 row postContainer">
+                <div class="row col-12 g-1">
+                    <div class="postTitle d-block d-md-none">
+                        <h3 class="d-inline-block">
+                            {{post.title}}
+                        </h3>
+                    </div>
+
+                    <div class='col-12 col-md-3 postImageContainer'>
+                        <a href="{{asset('images/'~post.PostFrontImage)}}" data-lightbox="{{post.id}}" data-title="{{post.title}}">
+                            <div class="postImage" style="border:none;">
+                                <img class="postImg" src="{{asset('images/'~post.PostFrontImage)}}" alt="{{ post.PostFrontImage.figcaption }}">
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class='col-12 col-md-9 postContent'>
+                        <div class="postTitle d-none d-md-block">
+                            <h3 class="d-inline-block">
+                                {{post.title}}
+                            </h3>
+                        </div>
+                        <div>
+                            {{post.content}}
+                        </div>
+                    </div>
+                
+                    <span class="postBar">{{post.createdAt|date("d/m/Y")}} | {{ post.author }}</span>
+
+                </div>
+
+                <div class="row g-1 pt-5">
+                    {% for image in images %}
+                        <div class="blogPostGalleryImage col-4 col-sm-3 col-md-2">
+                            <a href="{{asset('images/'~image)}}" data-lightbox="{{post.id}}" data-title="{{image.figcaption}}">
+                                <img class="blogPostGalleryImage" src="{{asset('images/'~image)}}" alt="{{image.figcaption}}">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+    </main>
+{% endblock %}

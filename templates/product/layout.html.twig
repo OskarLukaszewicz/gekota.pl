@@ -1,0 +1,143 @@
+{% extends 'base.html.twig' %}
+
+{% set imagesList = animal.getProductImages %}
+
+{% block head %}
+    {{ parent() }}
+    <script src="{{ asset('js/animalCard.js') }}" defer type="text/javascript"></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org/",
+        "@type": "Product",
+        "name": "{{ animal.commonName }}",
+        "image": "{% if imagesList|length > 0 %} https://gekota.pl{{asset('images/'~imagesList[0])}} {% endif %}", 
+        "description": "{{ animal.commonName }} {{ animal.spieces }}",
+  
+        "offers": {
+          "@type": "Offer",
+          "url": "https://gekota.pl/offer/{{animal.class}}/{{animal.spieces}}",
+          "priceCurrency": "PLN",
+          "price": "{{animal.price}}",
+          "availability": "{% if animal.avaible == false %} https://schema.org/OutOfStock {% else %} https://schema.org/InStock {% endif %} "
+        }
+      }
+      </script>
+{% endblock %}
+
+{% block content %}
+
+    {% block background %}
+        <div
+            class="p-5 text-center bg-image d-none d-sm-flex"
+            style="
+            background-image: url('{{asset('images/' ~ categories[animal.class].filename)}}');
+            height: 280px;
+            border-bottom: 1px solid rgb(133, 184, 30);"
+        >
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.2)">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div>
+                        <h2 class="gekotaHeading">{{ categories[animal.class].name }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div
+            class="p-5 text-center bg-image d-flex d-sm-none"
+            style="
+                background-image: url('{{asset('images/' ~ categories[animal.class].filename)}}');
+                height: 280px;
+                border-bottom: 1px solid rgb(133, 184, 30);"
+        >
+            <div class="mask" style="background-color: rgba(0, 0, 0, 0.2)">
+                <div class="d-flex justify-content-center align-items-center h-100">
+                    <div class="headingMobile">
+                        <h2 class="gekotaHeading">{{ categories[animal.class].name }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    <main style="background: linear-gradient(90deg, rgba(133,184,30,0.1) 0%, rgba(133,184,30,0) 5%, rgba(133,184,30,0) 95%, rgba(133,184,30,0.1) 100%);">
+
+        {% block breadAndMessageBar %}
+            <div class="aktualnosci">
+                <nav aria-label="breadcrumb" class="d-inline-block">
+                    <ol class="breadcrumb m-0 p-1">
+                        <li class="breadcrumb-item">
+                            <a class="chlebek" href="/">Strona główna</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a class="chlebek" href="{{ path('offer_show') }}">Oferta</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a class="chlebek" href="{{path('offer_list_show', {'class':animal.class })}}"> {{categories[animal.class].name}} </a>
+                        </li>
+                        <li class="breadcrumb-item active">{{animal.spieces}}</li>
+                    </ol>
+                </nav>
+                <div>
+                    {% block message %}
+                        🐢 🐍 🦎 Nie ma możliwości wysyłki zwierząt kręgowych pocztą ani
+                        kurierem 🦎 🐍 🐢
+                    {% endblock %}
+                </div>
+            </div>
+        {% endblock %}
+
+        {% block main %}
+        <section>
+
+            <div class="container col-md-12 col-lg-10 col-xl-8 py-5 px-4" style="max-width: none;">
+
+                <div class="row animalOfferCard p-none p-md-3">
+              
+                    <div class="container col-6 col-lg text-start" style="min-width: 300px"> 
+
+                        <a href="{{path('offer_list_show', {'class':animal.class })}}" class="goBack"><i class="fas fa-angle-double-left"></i> {{ categories[animal.class].name }}</a>
+                
+                            <section>
+                                <div class="text-center pb-0" style="padding-top: calc(20px + 1.4vw);">
+                                    <div class="systematyka">
+                                        <h2 class="availability text-white">Cena:</h2>  
+                                        <h4 class="availability text-white">{{ animal.price }}zł</h4> 
+                                        <br>
+                                        <h4 class="availability text-white">Dostępność:  
+                                            <i class="fas {% if animal.avaible == false %}fa-times text-danger {% else %} fa-check text-success {% endif %}"></i> 
+                                        </h4>
+                                    </div>
+
+                                    {% block images %}
+                                        <a href="{{asset('images/'~imagesList[0])}}" data-lightbox="{{animal.id}}" data-title="{{ animal.commonName }} {{ animal.spieces }}">
+                                            <img src="{{asset('images/'~imagesList[0])}}" class="offerPhoto" alt="{{ animal.commonName }} {{ animal.spieces }}">
+                                        </a>
+                                    {% endblock %}
+
+                                </div>
+                            </section>
+                        
+                    <div class="systematyka d-none d-md-block">
+                        {{ animal.description }}
+                    </div>
+                </div>
+
+                <div class="container col-6 col-lg text-end" style="min-width: 300px">
+                <header><h1 class="sectionHeader mb-0">{{animal.commonName}}</h1></header> 
+                <br> 
+                <h2 class="sectionHeader offerCardHeader mt-0">{{animal.spieces}}</h2>
+                <h3 class="sectionSubHeader">Prawidłowe warunki hodowli:</h3>
+
+                {% block table %}
+                {% endblock %}
+
+            </div>
+        </div>
+        </section>
+
+        {% endblock %}
+        
+    </main>
+
+{% endblock %}
