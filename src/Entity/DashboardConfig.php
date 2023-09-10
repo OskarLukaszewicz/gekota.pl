@@ -38,11 +38,17 @@ class DashboardConfig
      */
     private $notes;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $chartDaysRange;
+
     public function __construct()
     {
         $this->animalsNum = 4;
         $this->blogPostsNum = 4;
         $this->eventsWeeksNum = 8;
+        $this->chartDaysRange = 14;
     }
 
     public function getId(): ?int
@@ -94,6 +100,18 @@ class DashboardConfig
     public function setNotes(string $notes): self
     {
         $this->notes = $notes;
+
+        return $this;
+    }
+
+    public function getChartDaysRange(): ?string
+    {
+        return $this->chartDaysRange;
+    }
+
+    public function setChartDaysRange(string $chartDaysRange): self
+    {
+        $this->chartDaysRange = $chartDaysRange;
 
         return $this;
     }

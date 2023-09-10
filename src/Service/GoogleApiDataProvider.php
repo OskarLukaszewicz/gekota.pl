@@ -2,15 +2,13 @@
 
 namespace App\Service;
 
-// use Google\Client as GoogleClient;
-// use Google\Service\AnalyticsData as AnalyticsData;
-// use Google\Service\AnalyticsData\RunReportRequest;
-
+use Google\Analytics\Data\V1beta\OrderBy\DimensionOrderBy;
+use Google\Analytics\Data\V1beta\OrderBy\DimensionOrderBy\OrderType;
 use Google\Analytics\Data\V1beta\BetaAnalyticsDataClient;
 use Google\Analytics\Data\V1beta\DateRange;
 use Google\Analytics\Data\V1beta\Dimension;
 use Google\Analytics\Data\V1beta\Metric;
-
+use Google\Analytics\Data\V1beta\OrderBy;
 
 
 
@@ -36,7 +34,7 @@ class GoogleApiDataProvider
             'dateRanges' => [
                 new DateRange([
                     'start_date' => $startDate,
-                    'end_date' => 'today',
+                    'end_date' => '1daysAgo',
                 ]),
             ],
             'dimensions' => [new Dimension(
@@ -50,18 +48,40 @@ class GoogleApiDataProvider
                     'name' => 'activeUsers',
                 ]
             )
+            ],
+            'orderBys' => [new OrderBy(
+                [
+                    'dimension' => new DimensionOrderBy([
+                        'dimension_name' => 'date',
+                        'order_type' => OrderType::ALPHANUMERIC
+                    ]),
+                    'desc' => false,
+                ]
+            )
             ]
-        ]);
+            ]);
 
-        $rows = $response->getRows();
 
-        // foreach ($rows as $row) {
-        //     $sourceMedium = $row->getDimensionValues()[0]->getValue();
-        //     $sessions = $row->getMetricValues()[0]->getValue();
-        //     // Przetwarzaj dane, np. wypisując źródło/medium i liczbę sesji
-        //     echo "Źródło/Medium: $sourceMedium\n";
-        //     echo "Liczba sesji: $sessions\n";
-        // }
+
+
+        $dateUserData = $response->getRows();
+
+        $dates = [];
+        $users = [];
+
+        foreach ($dateUserData as $row) {
+            $dates[] = $row->getDimensionValues()[0]->getValue();
+            $users[] = $row->getMetricValues()[0]->getValue();
+        }
+
+        $data = [
+            'dates' => $dates,
+            'users' => $users
+        ];
+
+        return $data;
+
+        
     }
 
 

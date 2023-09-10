@@ -43,7 +43,7 @@
         {% endfor %}
     </div>
 
-    <div>
+    <div class="row">
         <form action="{{ path('admin_dashboard_action') }}" method="post">
             <input type="hidden" value="updateNotesValue" name="action">
             <input type="text" value="{{config.notes}}" name="value">
@@ -51,8 +51,18 @@
         </form>
     </div>
 
+    <div class="row">
+        <div>
+            <form action="{{ path('admin_dashboard_action') }}" method="post">
+                <input type="hidden" value="updateChartDaysRangeValue" name="action">
+                <input type="number" name="value" min="7" max="365" value="{{config.chartDaysRange}}" class="numberInput">
+                <input type="submit" class="submitForNumberImput">
+            </form>
+        </div>
+    </div>
+
     {{ dump(chart) }}
-    <div style="height: 300px;">
+    <div style="height: 400px;width:80%;">
         {{ render_chart(chart) }}
     </div>
 

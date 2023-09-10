@@ -44,9 +44,9 @@ class DashboardController extends AbstractController
 
         $dataProvider = new GoogleApiDataProvider();
         $credentials = $this->getParameter('google.api.credentials');
-        $dataProvider->provideData($request, $credentials, 2);
+        $data = $dataProvider->provideData($request, $credentials, $config->getChartDaysRange());
 
-        $chart = ChartBuilder::generateChartsForDashboard($chartBuilder);
+        $chart = ChartBuilder::generateChartsForDashboard($chartBuilder, $data);
 
         return $this->render('admin/dashboard.html.twig', ['animals' => $animals, 'posts' => $posts, 'events' => $events, 'config' => $config, 'chart' => $chart]);
     }
@@ -70,6 +70,9 @@ class DashboardController extends AbstractController
                 break;
             case 'updateEventsValue':
                 $config->setEventsWeeksNum(intval($value));
+                break;
+            case 'updateChartDaysRangeValue':
+                $config->setChartDaysRange(intval($value));
                 break;
             case 'updateNotesValue':
                 $config->setNotes($value);
