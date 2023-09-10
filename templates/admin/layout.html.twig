@@ -8,7 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<link rel="stylesheet" href="{{asset('build/admin.css')}}">
+		<link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    {{ encore_entry_link_tags('app') }}
   </head>
   <body>
 		
@@ -87,9 +88,10 @@
 
     {% block assets %}
       <script src="{{ asset('js/jquery.min.js') }}"></script>
-      <script src="{{asset('js/main.js')}}"></script>
+      {{ encore_entry_script_tags('app') }}
       <script src="{{asset('js/bootstrap.min.js')}}"></script>
       <script src="{{asset('js/close-flash.js')}}"></script>
+      <script src="{{asset('build/app.js')}}"></script>
       {% if (selectedAnimal is defined and selectedAnimal) or (selectedPost is defined and selectedPost) %}
         <script src="{{asset('js/sidebar-utils.js')}}" ></script>
       {% endif %}
