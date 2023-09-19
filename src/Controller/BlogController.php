@@ -12,7 +12,7 @@ class BlogController extends AbstractController
 {
 
     /**
-     * @Route("/blog", name="blog_list_show")
+     * @Route("/blog", name="blog_list_show", options={"sitemap" = {"priority" = 1.0 , "changefreq" = "weekly"}})
      */
     public function showBlogList(ManagerRegistry $doctrine)
     {

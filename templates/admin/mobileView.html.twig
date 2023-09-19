@@ -1,0 +1,57 @@
+{% block styles %}
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{asset('css/admin.css')}}">
+    
+{% endblock %}
+
+{% block content %}
+    <body>
+        <div id="mobileItemListTab">
+            <div class='d-flex align-items-end'>
+                <h1 class="sectionHeaderMobile w-100">
+                    Zwierzęta
+                </h1>
+            </div>
+            <div class="contentNavMobile d-flex text-center">
+                {% for key, animal in animalTypes %}
+                    <a href="{{path('admin_mobile_show', {'class' : key})}}" {% if class == key %} class="itemActive" {% endif %}>
+                        {{ animal }}
+                    </a>
+                {% endfor %}
+            </div>
+            <div>
+                <ul class="list-unstyled mobileList components">
+                    {% for animal in animals %}
+                        <li class="mobileItemContainer py-5">
+                            <div class="row m-0 align-items-center d-flex contentItem">
+                                <div class="col-7 w-100 h-100 d-flex">
+                                    <span class="d-flex align-items-center">
+                                        {{ animal.commonName }}
+                                    </span>
+                                </div>
+                                <div class="col-2 p-0">
+                                    <input class="ajaxQueryPrice" min="0" type="number" value="{{animal.price}}" data-id="{{animal.id}}" style="width:3em;"/> zł
+                                </div>
+                                <div class="col-2 p-0">
+                                    <input class="ajaxQueryNumber" min="0" type="number" value="{{animal.inStock}}" data-id="{{animal.id}}" style="width:3em;"/> szt.
+                                </div>
+                                <div class="col-1 pt-3">
+                                    <label class="switch" for="ajaxQueryCheckbox{{animal.id}}">
+                                        <input data-is-avaible="{{animal.avaible}}" class="ajaxQueryCheckbox" type="checkbox" id="ajaxQueryCheckbox{{animal.id}}" value="{{animal.id}}" />
+                                        <div class="slider round"></div>
+                                    </label>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </body>
+{% endblock %}
+
+{% block assets %}
+    <script src="{{asset('js/ajax-queries.js')}}"></script>
+{% endblock %}

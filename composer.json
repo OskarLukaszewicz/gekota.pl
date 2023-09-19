@@ -15,6 +15,7 @@
         "google/analytics-data": "^0.11.1",
         "google/apiclient": "^2.15",
         "liip/imagine-bundle": "^2.11",
+        "presta/sitemap-bundle": "^3.3",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/console": "5.4.*",
         "symfony/dotenv": "5.4.*",

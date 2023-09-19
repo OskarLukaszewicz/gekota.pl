@@ -19,7 +19,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/", name="default_index")
+     * @Route("/", name="default_index", options={"sitemap" = true, "changefreq" = "weekly"})
      */
     public function index()
     {
@@ -29,7 +29,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/contact", name="contact_show")
+     * @Route("/contact", name="contact_show", options={"sitemap" = {"priority" = 0.7, "changefreq" = "yearly"}})
      */
     public function showContact()
     {
@@ -37,7 +37,7 @@ class DefaultController extends AbstractController
     }
 
     /**
-     * @Route("/calendar", name="calendar_show")
+     * @Route("/calendar", name="calendar_show", options={"sitemap" = {"priority" = 0.7, "changefreq" = "weekly" }})
      */
     public function showCalendar()
     {
@@ -58,15 +58,4 @@ class DefaultController extends AbstractController
          return $this->render("gallery.html.twig", ['images' => $images, 'gallery' => $gallery]);
      }
 
-     /**
-      * @Route("/test/{id}", name="test")
-      */
-      public function test(Animal $animal)
-      {
-        $animal->setInStock(10);
-        $em = $this->doctrine->getManager();
-        $em->persist($animal);
-        $em->flush();
-        return new Response;
-      }
 }

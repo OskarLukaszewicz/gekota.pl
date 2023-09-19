@@ -116,7 +116,9 @@ class BlogCrudController extends AbstractController
 
                 if ($form->isSubmitted() && $form->isValid()) {
 
-                    $blog = $form->getData();
+                    $post = $form->getData();
+
+                    $post->setSlug(str_replace(" ","-",$post->getSlug()));
 
                     $this->em->flush();
 

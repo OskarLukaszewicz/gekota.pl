@@ -4,6 +4,15 @@
  * Copyright 2011-2019 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
+
+/* 
+  rgb(18, 92, 19)   darkGreen
+  rgb(62, 124, 23)  Green
+  rgb(244, 164, 66) orange
+  rgb(232, 225, 217) whitish
+  rgb(0, 109, 89) inactive
+  rgb(114, 190, 65) active
+ */
 :root {
   --blue: #007bff;
   --indigo: #6610f2;
@@ -76,6 +85,328 @@ body {
   color: #212529;
   text-align: left;
   background-color: #fff;
+}
+
+.mobileItemContainer {
+  font-size: 1.9rem;
+  border-bottom: 2px solid rgb(62, 124, 23);
+}
+
+.contentNav {
+  margin-bottom: 2px;
+}
+
+.categoryTab {
+  font-size: 1rem !important;
+  color: rgb(232, 225, 217);
+  width: calc(14.3% - 1.7px);
+  margin-right: 2px;
+  background-color: rgb(62, 124, 23);
+  padding: 3px;
+  border-radius: 3px;
+}
+
+.contentNav span,
+.contentNav div {
+  font-size: 1rem !important;
+  color: rgb(232, 225, 217);
+  margin-right: 2px !important;
+  background-color: rgb(62, 124, 23);
+  padding: 6px;
+  border-radius: 3px;
+}
+
+.contentNav span:last-child {
+  margin-right: 0px !important;
+}
+
+.contentNav div {
+  background-color: rgb(18, 92, 19);
+}
+
+.blogHeader {
+  padding-left: 10px;
+}
+
+.contentNav a:last-child,
+.contentNav span {
+  margin-right: 0px;
+}
+
+.contentNavMobile a {
+  font-size: 1.8rem !important;
+  color: rgb(232, 225, 217);
+  background-color: rgb(62, 124, 23);
+  width: 14.28%;
+  padding: 5px;
+}
+
+.contentItemContainer {
+  margin-bottom: 2px;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.contentItemContainer:last-child {
+  border-radius: 3px 3px 6px 6px;
+}
+
+.contentItem {
+  font-size: 1.1rem;
+  background-color: rgb(18, 92, 19);
+  transition: 0.4s;
+}
+
+.contentItemContainer input {
+  font-size: 0.9rem;
+  border: 1px solid rgb(62, 124, 23);
+  height: 25px;
+  padding-left: 3px;
+  line-height: normal !important;
+  background-color: rgba(232, 225, 217, 0.9);
+  border-radius: 5px;
+}
+
+.mobileList {
+  background-color: rgb(18, 92, 19);
+  color: rgb(232, 225, 217);
+}
+
+.itemActive {
+  background-color: rgba(114, 190, 65, 0.8) !important;
+}
+
+.itemActiveBlog .blogTableCell {
+  background-color: rgba(114, 190, 65, 0.8) !important;
+}
+
+.contentNav .blogTableCell:last-child {
+  margin-right: 0px !important;
+}
+
+.itemInactive {
+  background-color: rgb(0, 109, 89);
+  color: rgba(232, 225, 217, 0.5) !important;
+  transition: 0.4s;
+}
+
+.itemInactive a {
+  color: rgba(232, 225, 217, 0.5) !important;
+}
+
+.menuTabBlog {
+  width: calc(50% - 1px);
+}
+
+.dashboardModule {
+  background-color: rgba(18, 92, 19, 0.3);
+  border-radius: 15px;
+  padding: 10px;
+  margin: 3px;
+  border: 1px solid rgb(62, 124, 23);
+  color: rgba(232, 225, 217, 0.95) !important;
+  overflow: hidden;
+}
+
+/* 
+  rgb(18, 92, 19)   darkGreen
+  rgb(62, 124, 23)  Green
+  rgb(244, 164, 66) orange
+  rgb(232, 225, 217) whitish
+  rgb(0, 109, 89) inactive
+  rgb(114, 190, 65) active
+ */
+
+.sectionHeader {
+  color: rgb(232, 225, 217);
+  background-color: rgb(62, 124, 23);
+  width: 45%;
+  padding: 5px;
+  margin-bottom: 2px;
+  margin-right: 2px;
+  display: flex;
+  justify-content: center;
+  border-radius: 6px 6px 3px 3px;
+}
+
+.sectionOffHeader {
+  width: 55%;
+  background-color: rgba(114, 190, 65, 0.8);
+  margin-bottom: 2px;
+  display: flex;
+  justify-content: center;
+  border-radius: 3px 6px 3px 3px;
+}
+
+.sectionOffHeader a {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.sectionHeaderMobile {
+  color: rgb(232, 225, 217);
+  background-color: rgb(18, 92, 19);
+  width: 100%;
+  font-size: 4rem;
+  padding: 10px;
+  padding-left: 30px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.dashboardListItem {
+  height: 75px;
+  padding-top: 10px;
+}
+
+.dashboardListItem:nth-child(4n - 4) {
+  background-color: rgba(62, 124, 23, 0.3);
+}
+.dashboardListItem:nth-child(4n - 3) {
+  background-color: rgba(62, 124, 23, 0.3);
+}
+
+.dashboardModule form {
+  position: absolute;
+  right: 5px;
+  bottom: 0px;
+}
+.dashboardModule form label {
+  margin-right: 5px;
+  color: rgba(232, 225, 217, 0.6);
+  line-height: 1.5;
+}
+
+.sidebarContainer {
+  background-color: rgb(18, 92, 19);
+  border-radius: 3px;
+}
+
+.sidebarMainBlock,
+.itemTab {
+  background-color: rgb(18, 92, 19);
+  border-radius: 3px;
+  margin: 2px 0px 2px 0px;
+  min-height: 200px;
+}
+
+.imageItem {
+  padding: 20px !important;
+  width: 100%;
+  border-bottom: 2px solid #343a40;
+}
+
+.secondaryProductImage {
+  width: 90%;
+  border-radius: 6px;
+  border: 2px solid #343a40;
+  margin: auto;
+}
+
+.sidebarMainBlock form {
+  width: 80%;
+  margin: auto;
+}
+
+.itemTab {
+  border-radius: 3px 3px 10px 10px;
+}
+
+.contentBlockContainer {
+  transform: translate(-2px, 0);
+}
+
+.deleteXButton {
+  position: absolute;
+  right: 15%;
+  top: 6%;
+  width: 30px;
+  height: 30px;
+  border-radius: 50% !important;
+  border: 3px solid #343a40;
+  line-height: 20px;
+  font-size: 1.2rem;
+  background-color: rgba(114, 190, 65, 0.4);
+}
+
+.deleteFlashButton {
+  position: absolute;
+  right: 20px;
+  top: 2px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50% !important;
+  border: 3px solid #343a40;
+  line-height: 15px;
+  font-size: 1.2rem;
+  background-color: rgba(114, 190, 65, 0.4);
+}
+
+.deleteXButtonGallery {
+  right: 7%;
+}
+
+.deleteXButton:hover,
+.deleteFlashButton:hover {
+  background-color: rgb(114, 190, 65);
+}
+
+.primaryProductImage {
+  width: 80%;
+  border-radius: 6px;
+  border: 3px solid #343a40;
+}
+
+#notes {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(232, 225, 217, 0);
+  border: none;
+  color: rgba(232, 225, 217, 0.9) !important;
+  padding: 20px;
+}
+
+#notes:focus {
+  background-color: rgba(232, 225, 217, 0.2);
+}
+
+#notesContainer {
+  height: 100%;
+  width: 100%;
+  right: 0 !important;
+}
+
+#notesContainer h3 {
+  color: rgba(232, 225, 217, 0.9);
+  padding-left: 20px;
+}
+
+.dashboardModule form input {
+  border: 1px solid rgb(62, 124, 23);
+  height: 20px;
+  padding: 0px;
+  line-height: normal !important;
+  background-color: rgba(232, 225, 217, 0.7);
+  margin-bottom: auto;
+}
+
+.dashboardModule form input:nth-child(3) {
+  border-radius: 8px 0px 0px 8px;
+  width: 50px;
+  padding-left: 4px;
+}
+.dashboardModule form input:nth-child(4) {
+  border-radius: 0px 8px 8px 0px;
+}
+
+#chartDayRangeForm {
+  top: 5px;
+  left: 8px;
+  right: auto !important;
+}
+
+#dashboardContainer {
 }
 
 [tabindex="-1"]:focus {
@@ -246,7 +577,54 @@ label {
 }
 
 button {
-  border-radius: 0;
+  border-radius: 3px;
+  background-color: rgb(62, 124, 23);
+  color: rgb(232, 225, 217);
+  border: none;
+  margin-right: 2px !important;
+  width: calc(33.33% - 1.34px);
+  font-size: 0.9rem !important;
+}
+
+.submitButton {
+  line-height: 2rem;
+  border-radius: 5px;
+  background-color: rgb(62, 124, 23);
+  color: rgb(232, 225, 217);
+  border: 2px solid #343a40;
+}
+
+.imageContainer {
+  padding: 0 !important;
+}
+
+.imageContainer input[type="checkbox"] {
+  position: absolute;
+  top: 4px;
+  right: 18px;
+}
+
+.submitButton:hover {
+  background-color: rgb(114, 190, 65);
+}
+
+.addImageImage {
+  width: calc(100% - 2px);
+  aspect-ratio: 4 / 3;
+  margin: 0px 2px 2px 0px;
+  border-radius: 3px;
+}
+
+.flashBar {
+  background-color: rgba(244, 164, 66, 0.4);
+}
+
+.row button:last-child {
+  margin-right: 0px !important;
+}
+
+button:hover {
+  background-color: rgb(114, 190, 65);
 }
 
 button:focus {
@@ -10640,7 +11018,7 @@ body {
   font-size: 14px;
   line-height: 1.8;
   font-weight: normal;
-  background: #fff;
+  background-color: #343a40 !important;
   color: gray;
 }
 
@@ -10648,7 +11026,7 @@ a {
   -webkit-transition: 0.3s all ease;
   -o-transition: 0.3s all ease;
   transition: 0.3s all ease;
-  color: #2f89fc;
+  color: rgba(232, 225, 217, 0.9);
 }
 a:hover,
 a:focus {
@@ -10656,6 +11034,7 @@ a:focus {
   outline: none !important;
   -webkit-box-shadow: none;
   box-shadow: none;
+  color: white;
 }
 
 button {
@@ -10722,10 +11101,9 @@ h5,
   max-width: 250px;
   background: #212121;
   color: #fff;
-  -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
-  transition: all 0.3s;
-  position: relative;
+  position: sticky;
+  height: 100vh;
+  top: 0;
 }
 #sidebar .h6 {
   color: #fff;
@@ -10745,7 +11123,7 @@ h5,
   color: #fff;
   display: block;
   padding: 10px 30px;
-  background: #2f89fc;
+  background: rgb(62, 124, 23);
 }
 #sidebar ul.components {
   padding: 0;
@@ -10767,16 +11145,16 @@ h5,
 }
 #sidebar ul li a:hover {
   color: #fff;
-  background: #2f89fc;
-  border-bottom: 1px solid #2f89fc;
+  background: rgb(62, 124, 23);
+  border-bottom: 1px solid rgb(62, 124, 23);
 }
 #sidebar ul li.active > a {
   background: transparent;
   color: #fff;
 }
 #sidebar ul li.active > a:hover {
-  background: #2f89fc;
-  border-bottom: 1px solid #2f89fc;
+  background: rgb(62, 124, 23);
+  border-bottom: 1px solid rgb(62, 124, 23);
 }
 @media (max-width: 991.98px) {
   #sidebar {
@@ -10851,13 +11229,13 @@ a[data-toggle="collapse"] {
 }
 
 .btn.btn-primary {
-  background: #2f89fc;
-  border-color: #2f89fc;
+  background: rgb(62, 124, 23);
+  border-color: rgb(62, 124, 23);
 }
 .btn.btn-primary:hover,
 .btn.btn-primary:focus {
-  background: #2f89fc !important;
-  border-color: #2f89fc !important;
+  background: rgb(62, 124, 23) !important;
+  border-color: rgb(62, 124, 23) !important;
 }
 
 .footer p {
@@ -10897,4 +11275,54 @@ a[data-toggle="collapse"] {
 
 .subscribe-form .form-control {
   background: #4897fc;
+}
+
+.switch {
+  display: inline-block;
+  height: 30px;
+  position: relative;
+  width: 60px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  background-color: #ccc;
+  bottom: 0;
+  cursor: pointer;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 0.4s;
+  transform: translate(-30px, 0);
+}
+
+.slider:before {
+  background-color: #fff;
+  bottom: 4px;
+  content: "";
+  height: 22px;
+  left: 4px;
+  position: absolute;
+  transition: 0.4s;
+  width: 22px;
+}
+
+input:checked + .slider {
+  background-color: #66bb6a;
+}
+
+input:checked + .slider:before {
+  transform: translateX(30px);
+}
+
+.slider.round {
+  border-radius: 30px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }

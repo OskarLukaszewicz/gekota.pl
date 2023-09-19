@@ -57,7 +57,7 @@ class OfferController extends AbstractController
     ];
 
     /**
-     * @Route("/offer", name="offer_show")
+     * @Route("/offer", name="offer_show", options={"sitemap" = {"priority" = 1.0, "changefreq" = "yearly" }})
      */
     public function index()
     {

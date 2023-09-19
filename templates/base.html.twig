@@ -25,25 +25,7 @@
           <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
           <link href="{{ asset('css/app.css') }}" type="text/css" rel="stylesheet" />
         {% endblock %}
-        {% block javascript %}
-          <script src="{{ asset('build/app.js') }}" defer type="text/javascript"></script>
-          <script src="{{ asset('js/gekota_js.js') }}" defer type="text/javascript"></script>
-
-          <script src="{{ asset('js/mdb.min.js') }}" defer type="text/javascript"></script>
-          <script src="{{ asset('js/lightbox-plus-jquery.min.js') }}"></script>
-          <script
-            defer
-            src="https://www.googletagmanager.com/gtag/js?id=G-1EKN05B606"
-          ></script>
-          <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-              dataLayer.push(arguments);
-            }
-            gtag("js", new Date());
-            gtag("config", "G-1EKN05B606");
-          </script>
-        {% endblock %}
+        
     {% endblock %}
   </head>
 
@@ -338,5 +320,24 @@
           ALL RIGHTS RESERVED
         </div>
       </footer>{% endblock %}
+      {% block javascript %}
+          <script src="{{ asset('build/app.js') }}" defer type="text/javascript"></script>
+          <script src="{{ asset('js/gekota_js.js') }}" defer type="text/javascript"></script>
+
+          <script src="{{ asset('js/mdb.min.js') }}" defer type="text/javascript"></script>
+          <script src="{{ asset('js/lightbox-plus-jquery.min.js') }}"></script>
+          <script
+            defer
+            src="https://www.googletagmanager.com/gtag/js?id=G-1EKN05B606"
+          ></script>
+          <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+            gtag("config", "G-1EKN05B606");
+          </script>
+        {% endblock %}
   </body>
 </html>

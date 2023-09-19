@@ -5,10 +5,12 @@ namespace App\Controller\Admin;
 use App\Entity\DashboardConfig;
 use App\Exception\ActionNotFoundException;
 use App\Service\ChartBuilder;
+use App\Service\FakeChartDataProvider;
 use App\Service\GoogleApiDataProvider;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 
@@ -42,13 +44,15 @@ class DashboardController extends AbstractController
         $posts = $this->blogPostRepository->findBy([],['createdAt' => "DESC"], $config->getBlogPostsNum());
         $events = $this->eventRepository->getEventsByDateRange($config->getEventsWeeksNum());
 
-        $dataProvider = new GoogleApiDataProvider();
         $credentials = $this->getParameter('google.api.credentials');
-        $data = $dataProvider->provideData($request, $credentials, $config->getChartDaysRange());
+        $dataProvider = new GoogleApiDataProvider($request, $credentials, $config->getChartDaysRange());
+        $data = $dataProvider->provideData(true);
+        
+        $charts = ChartBuilder::generateChartsForDashboard($chartBuilder, $data);
 
-        $chart = ChartBuilder::generateChartsForDashboard($chartBuilder, $data);
+        count($events) > 4 && $events = array_slice($events, 0, 4);
 
-        return $this->render('admin/dashboard.html.twig', ['animals' => $animals, 'posts' => $posts, 'events' => $events, 'config' => $config, 'chart' => $chart]);
+        return $this->render('admin/dashboard.html.twig', ['animals' => $animals, 'posts' => $posts, 'events' => $events, 'config' => $config, 'charts' => $charts]);
     }
 
     /**
@@ -87,5 +91,22 @@ class DashboardController extends AbstractController
         $route = $request->headers->get('referer');
 
         return $route ? $this->redirect($route) : $this->redirectToRoute("admin_index_show");
+    }
+
+    /**
+     * @Route("/admin/dashboard/ajax/{text}")
+     */
+    public function saveNotes(string $text, Request $request)
+    {
+
+        if ($request->isXmlHttpRequest() && $request->getMethod() === "POST") {
+
+            $config = $this->getUser()->getDashboardConfig() ?: $config = new DashboardConfig();
+            $config->setNotes($text);
+            
+            $this->em->flush();
+    
+            return new Response(1, '200');
+        }
     }
 }

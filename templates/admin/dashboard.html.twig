@@ -2,68 +2,93 @@
 
 {% block content %}
 
-    Witaj {{ app.user.nickname }}
-
-    <div class="row">
-        <div>
-            <form action="{{ path('admin_dashboard_action') }}" method="post">
-                <input type="hidden" value="updateAnimalsValue" name="action">
-                <input type="number" name="value" min="1" max="9" value="{{config.animalsNum}}" class="numberInput">
-                <input type="submit" class="submitForNumberImput">
-            </form>
-        </div>
-        {% for animal in animals %}
-            animal
-        {% endfor %}
-    </div>
-
-    <div class="row">
-        <div>
-            <form action="{{ path('admin_dashboard_action') }}" method="post">
-                <input type="hidden" value="updatePostsValue" name="action">
-                <input type="number" name="value" min="1" max="9" value="{{config.blogPostsNum}}" class="numberInput">
-                <input type="submit" class="submitForNumberImput">
-            </form>
-        </div>
-        {% for post in posts %}
-            Post
-        {% endfor %}
-    </div>
-
-    <div class="row">
-        <div>
-            <form action="{{ path('admin_dashboard_action') }}" method="post">
-                <input type="hidden" value="updateEventsValue" name="action">
-                <input type="number" name="value" min="1" max="9" value="{{config.eventsWeeksNum}}" class="numberInput">
-                <input type="submit" class="submitForNumberImput">
-            </form>
-        </div>
-        {% for event in events %}
-            event
-        {% endfor %}
-    </div>
-
-    <div class="row">
-        <form action="{{ path('admin_dashboard_action') }}" method="post">
-            <input type="hidden" value="updateNotesValue" name="action">
-            <input type="text" value="{{config.notes}}" name="value">
-            <input type="submit">
-        </form>
-    </div>
-
-    <div class="row">
-        <div>
-            <form action="{{ path('admin_dashboard_action') }}" method="post">
+    <div id="dashboardContainer" class="row">
+        <div style="height:400px; margin-left:6px" class="dashboardModule col-11">
+            <form action="{{ path('admin_dashboard_action') }}" id="chartDayRangeForm" method="post" style="height:30px" class="d-flex justify-content-end">
+                <label>Zasięg raportów w dniach:</label>
                 <input type="hidden" value="updateChartDaysRangeValue" name="action">
                 <input type="number" name="value" min="7" max="365" value="{{config.chartDaysRange}}" class="numberInput">
-                <input type="submit" class="submitForNumberImput">
+                <input type="submit" value="->">
+            </form>
+            {{ render_chart(charts.dateUserChart) }}
+        </div>
+
+        <div style="height: 342px;" class="dashboardModule col-5">
+            {{ render_chart(charts.pageViewChart) }}
+        </div>
+
+        <div class="dashboardModule col-6 pt-0">
+            <div class="row">
+                {% for animal in animals %}
+                    <div class="col-6 dashboardListItem">
+                        <a href="{{path('admin_animals_show', {class : animal.class, spieces : animal.spieces})}}">
+                            {{animal.commonName}} <br>
+                            {{animal.price}}zł
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <form action="{{ path('admin_dashboard_action') }}" method="post" style="height:30px" class="d-flex justify-content-end">
+                <label>Liczba elementów do wyświetlenia:</label>
+                <input type="hidden" value="updateAnimalsValue" name="action">
+                <input type="number" name="value" min="1" max="8" value="{{config.animalsNum}}">
+                <input type="submit" value="->">
             </form>
         </div>
-    </div>
 
-    {{ dump(chart) }}
-    <div style="height: 400px;width:80%;">
-        {{ render_chart(chart) }}
-    </div>
+        <div style="height: 352px" class="dashboardModule col-5">
+            {{ render_chart(charts.cityUserChart) }}
+        </div>
 
+        <div class="dashboardModule col-6 pt-0">
+            <div class="row" style="height:300px g-0">
+                {% for post in posts %}
+                    <div class="col-6 dashboardListItem">
+                        <a href="{{path('admin_blog_show', {slug : post.slug})}}">
+                            {{post.title}} <br>
+                            {{post.author}}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <form action="{{ path('admin_dashboard_action') }}" method="post" style="height:30px" class="d-flex justify-content-end">
+                <label>Liczba elementów do wyświetlenia:</label>
+                <input type="hidden" value="updatePostsValue" name="action">
+                <input type="number" name="value" min="1" max="8" value="{{config.blogPostsNum}}">
+                <input type="submit" value="->">
+            </form>
+        </div>
+
+        <div class="dashboardModule col-5 p-5" style="height:352px">
+            <form action="{{ path('admin_dashboard_action') }}" id="notesContainer" method="post">
+                <h3>Notes:</h3>
+                <input type="hidden" value="updateNotesValue" name="action">
+                <textarea id="notes">{{config.notes}}</textarea>
+            </form>
+        </div>
+
+        <div class="dashboardModule col-6 pt-0">
+            <div class="row" style="height:300px g-0">
+                {% for event in events %}
+                    <div class="col-12 dashboardListItem">
+                        <a href="{{path('admin_events_show', {id: event.id})}}">
+                            {{event.city}} <br>
+                            {{event.date |date("d/m/Y") }}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+            <form action="{{ path('admin_dashboard_action') }}" method="post" style="height:30px" class="d-flex justify-content-end">
+                <label>Zasięg tygodni:</label>
+                <input type="hidden" value="updateEventsValue" name="action">
+                <input type="number" name="value" min="1" max="10" value="{{config.eventsWeeksNum}}" class="numberInput">
+                <input type="submit" value="->" class="submitForNumberImput">
+            </form>
+        </div>
+    </div>    
+{% endblock %}
+
+{% block assets %}
+    {{ parent() }}
+    <script src="{{asset('js/dashboard-ajax-queries.js')}}"></script>
 {% endblock %}

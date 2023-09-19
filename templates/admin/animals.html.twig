@@ -18,21 +18,22 @@
     
     <div id="itemListTab">
         <div class='d-flex align-items-end'>
+
             <h1 class="sectionHeader">
                 Zwierzęta
             </h1>
 
-            <h4 class="sectionHeader w-50 ml-auto p-1">
-                <button class="w-100 m-0">
-                    <a href="{{path('admin_animals_action', {'action' : "create" })}}">
-                        Dodaj zwierzaka
-                    </a>
-                </button>
+            <h4 class="sectionOffHeader">
+                <a href="{{path('admin_animals_action', {'action' : "create" })}}">
+                    Dodaj zwierzaka
+                </a>
             </h4>
+            
         </div>
+        
         <div class="contentNav d-flex text-center">
             {% for key, animal in animalTypes %}
-                <a href="{{path('admin_animals_show', {'class' : key})}}" {% if class == key %} class="itemActive" {% endif %}>
+                <a class="categoryTab {% if class == key %} itemActive {% endif %}" href="{{path('admin_animals_show', {'class' : key})}}">
                     {{ animal }}
                 </a>
             {% endfor %}
@@ -43,18 +44,18 @@
                 {% for animal in animals %}
                     <li class="contentItemContainer">
                         <div class="row m-0 align-items-center d-flex contentItem {% if animal.spieces|replace({" ":"-"}) == spieces %}itemActive{% endif %} {% if not animal.avaible %}itemInactive{% endif %}">
-                            <div class="col-6 w-100 h-100 d-flex">
-                                <a class="d-flex align-items-center" href="{{path('admin_animals_show', {'class' : animal.class, 'spieces' : animal.spieces|replace({" ":"-"})})}}" >
+                            <div class="col-7 w-100 h-100 d-flex">
+                                <a class="d-flex align-items-center w-100" href="{{path('admin_animals_show', {'class' : animal.class, 'spieces' : animal.spieces|replace({" ":"-"})})}}" >
                                     {{ animal.commonName }}
                                 </a>
                             </div>
                             <div class="col-2 p-0">
-                                {{animal.price}} zł
+                                <input class="ajaxQueryPrice" min="0" type="number" value="{{animal.price}}" data-id="{{animal.id}}" style="width:4em;"/> zł
                             </div>
                             <div class="col-2 p-0">
                                 <input class="ajaxQueryNumber" min="0" type="number" value="{{animal.inStock}}" data-id="{{animal.id}}" style="width:3em;"/> szt.
                             </div>
-                            <div class="col-2 pt-3">
+                            <div class="col-1 pt-3">
                                 <label class="switch" for="ajaxQueryCheckbox{{animal.id}}">
                                     <input data-is-avaible="{{animal.avaible}}" class="ajaxQueryCheckbox" type="checkbox" id="ajaxQueryCheckbox{{animal.id}}" value="{{animal.id}}" />
                                     <div class="slider round"></div>
@@ -73,96 +74,92 @@
 
     {% if selectedAnimal %}
 
-        <div class="row">
-            <button id="addImage" class="col-4">Dodaj zdjęcie</button>
-
-            <button class="col-4">
+        <div class="row m-0">
+            <button id="addImage">Dodaj zdjęcie</button>
+            <button>
                 <a href="{{path('admin_animals_action', {'action' : "update", id : selectedAnimal.id })}}">
                     Edytuj
                 </a>
             </button>
-            <button class="col-4">
+            <button>
                 <a href="{{path('admin_animals_action', {'action' : "remove", id : selectedAnimal.id })}}" class="deleteButton">
                     Usuń
                 </a>
             </button>
         </div>
+        <div class="col-12 text-center sidebarMainBlock">
+            <h4 class="text-light mb-2 pt-2">{{ selectedAnimal.commonName }}</h4>
+            {% for image in selectedAnimal.images %}
+                {% if image.animalFrontImage %}
+                    <div class="col-12 p-1"> 
+                        <img src={{ asset('images/'~image) }} class="primaryProductImage mx-auto"> </img> 
+                        <form action="{{ path('admin_relation_action', {'action' : 'remove', oneToManyEntity : "Animal", oneToManyEntityId : selectedAnimal.id, manyToOneEntity : "Image"}) }}" method="post">
+                            <input type="hidden" name="ids" value="{{image.id}}">
+                            <input type="submit" value="x" class="deleteXButton">
+                        </form>
+                    </div> 
+                {% endif %}
+            {% endfor %}
+        </div>
 
-        <div class="row sidebarContainer border border-dark">
+        <div class="sidebarMenuButtons row m-0">
+            <button class="menuTab {% if not flag %}itemActive{% endif %}" data-tab-name="info">Informacje</button>
+            <button class="menuTab " data-tab-name="table">Tabela</button>
+            <button class="menuTab {% if flag %}itemActive{% endif %}" data-tab-name="images">Zdjęcia</button>
+        </div>
 
-            <div class="col-12 text-center" >
-                <h4 class="text-light mt-3 mb-2 ml-2">{{ selectedAnimal.commonName }}</h4>
+        <div class='infoContainer itemTab {% if flag %}d-none{% endif %}'>
+        
+            <div class="row m-0 p-2 pb-3" style="line-height:1.7rem;">
+                <div class="col-5">Gatunek: </div>
+                <div class="col-7">{{selectedAnimal.spieces}} </div>
+                <div class="col-5">Zwyczajowa:</div>
+                <div class="col-7">{{selectedAnimal.commonName}} </div>
+                <div class="col-5">Cena: </div>
+                <div class="col-7">{{selectedAnimal.price}}</div>
+                <div class="col-5">Dostępność: </div>
+                <div class="col-7">{{ selectedAnimal.avaible ? "tak" : "nie" }} </div>
+                <div class="col-5 pb-2">Na stanie: </div>
+                <div class="col-7 pb-2">{{selectedAnimal.inStock}} </div>
+                <div class="col-12 py-2" style="border-top:1px solid #343a40;">Opis: </div>
+                <div class="col-12">{{selectedAnimal.description}}</div>
+            </div>
+            
+        </div>
+        <div class="imageContainer itemTab {% if not flag %}d-none{% endif %}">
+            <div class="row m-0 ">
                 {% for image in selectedAnimal.images %}
-                    {% if image.animalFrontImage %}
-                        <div class="col-12 p-1 mb-2"> 
-                            <img src={{ asset('images/'~image) }} class="primaryProductImage rounded mx-auto"> </img> 
-                            <form action="{{ path('admin_relation_action', {'action' : 'remove', oneToManyEntity : "Animal", oneToManyEntityId : selectedAnimal.id, manyToOneEntity : "Image"}) }}" method="post">
-                                <input type="hidden" name="ids" value="{{image.id}}">
-                                <input type="submit" value="x" class="deleteXButton">
-                            </form>
-                        </div> 
+                    {% if not image.animalFrontImage %}
+                        <div class="row m-0 imageItem">
+                            <div class="col-5 p-0 pl-2">
+                                <img src={{ asset('images/'~image) }} class="secondaryProductImage"> 
+                                </img>
+                            </div>
+                            <div class="formContainer col-7 p-0 row m-0">
+                                <div class="col-12 p-0 align-items-end d-flex justify-content-center h-25">
+                                    <span>
+                                        {{image.figcaption}}
+                                    </span>
+                                </div>
+                                <form class="col-6 p-0 d-flex align-items-start h-75" action="{{ path('admin_animals_action', {'action' : 'makeFront', 'id' : selectedAnimal.id}) }}" method="post">
+                                    <input type="hidden" name="imageId" value="{{image.id}}">
+                                    <input class="w-100 submitButton" type="submit" value="Front">
+                                </form>
+                                <form class="col-6 p-0 d-flex align-items-start h-75" action="{{ path('admin_relation_action', {'action' : 'remove', 'id' : selectedAnimal.id, oneToManyEntity : "Animal", oneToManyEntityId : selectedAnimal.id, manyToOneEntity : "Image"}) }}" method="post">
+                                    <input type="hidden" name="ids" value="{{image.id}}">
+                                    <input class="w-100 submitButton" type="submit" value="Usuń">
+                                </form>
+                                
+                            </div>
+                        </div>
                     {% endif %}
                 {% endfor %}
-                
-                <div class="sidebarMenuButtons row">
-                    <button class="menuTab col-4 {% if not flag %}itemActive{% endif %}" data-tab-name="info">Informacje</button>
-                    <button class="menuTab col-4" data-tab-name="table">Tabela</button>
-                    <button class="menuTab col-4 {% if flag %}itemActive{% endif %}" data-tab-name="images">Zdjęcia</button>
-                </div>
             </div>
-            <div class='infoContainer itemTab {% if flag %}d-none{% endif %}'>
-            
-                <div class="row p-1 m-1">
-                    <div class="col-5">Gatunek: </div>
-                    <div class="col-7">{{selectedAnimal.spieces}} </div>
-                    <div class="col-5">Zwyczajowa:</div>
-                    <div class="col-7">{{selectedAnimal.commonName}} </div>
-                    <div class="col-5">Cena: </div>
-                    <div class="col-7">{{selectedAnimal.price}}</div>
-                    <div class="col-5">Dostępność: </div>
-                    <div class="col-7">{{ selectedAnimal.avaible ? "tak" : "nie" }} </div>
-                    <div class="col-5">Na stanie: </div>
-                    <div class="col-7">{{selectedAnimal.inStock}} </div>
-                    <div class="col-12">Opis: </div>
-                    <div class="col-12">{{selectedAnimal.description}}</div>
-        
-                </div>
-            </div>
-            <div class="imageContainer itemTab p-0 {% if not flag %}d-none{% endif %}">
-                <div class="row m-0 ">
-                    {% for image in selectedAnimal.images %}
-                        {% if not image.animalFrontImage %}
-                            <div class="row m-0 p-1 imageItem">
-                                <div class="imageContainer col-6 p-0">
-                                    <img src={{ asset('images/'~image) }} class="secondaryProductImage"> 
-                                    </img>
-                                </div>
-                                <div class="formContainer col-6 p-0 row m-0">
-                                    <div class="col-12 p-0 align-items-end d-flex justify-content-center h-25">
-                                        <span>
-                                            {{image.figcaption}}
-                                        </span>
-                                    </div>
-                                    <form class="col-6 p-0 d-flex align-items-start h-75" action="{{ path('admin_animals_action', {'action' : 'makeFront', 'id' : selectedAnimal.id}) }}" method="post">
-                                        <input type="hidden" name="imageId" value="{{image.id}}">
-                                        <input class="w-100" type="submit" value="Front">
-                                    </form>
-                                    <form class="col-6 p-0 d-flex align-items-start h-75" action="{{ path('admin_relation_action', {'action' : 'remove', 'id' : selectedAnimal.id, oneToManyEntity : "Animal", oneToManyEntityId : selectedAnimal.id, manyToOneEntity : "Image"}) }}" method="post">
-                                        <input type="hidden" name="ids" value="{{image.id}}">
-                                        <input class="w-100" type="submit" value="Usuń">
-                                    </form>
-                                    
-                                </div>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-            {% set table = selectedAnimal.animalTable  %}
-            {% set animal = selectedAnimal %}
-            <div class="tableContainer itemTab d-none">
-                {% include('animalTable/animalTable.html.twig') %}
-            </div>
+        </div>
+        {% set table = selectedAnimal.animalTable  %}
+        {% set animal = selectedAnimal %}
+        <div class="tableContainer itemTab d-none">
+            {% include('animalTable/animalTable.html.twig') %}
         </div>
     {% endif %}
 {% endblock %}

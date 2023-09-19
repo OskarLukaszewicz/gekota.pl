@@ -1,6 +1,6 @@
 {% if parentTemplate == 'images.html.twig' %}
 
-    <div class="m-2 w-100">
+    <div class="p-2 w-100">
         <div class="d-inline">
             <label for="searchBar">Szukaj:</label>
             <input type="text" id="searchBar">
@@ -22,12 +22,10 @@
 {% else %}
     <div class="addImageContainer">
         <div class="utlisBar">
-            <div class="search">
-                <label for="searchBar">Szukaj:</label>
-                <input type="text" id="searchBar">
-            </div>
-            <input type="submit" form="addImagesForm" value="Dodaj zdjęcia"/>
-            <input type="button" id="imageViewSizeButton" value="Widok" />
+            <label for="searchBar">Szukaj:</label>
+            <input type="text" id="searchBar">
+            <input class="submitButton" type="submit" form="addImagesForm" value="Dodaj zdjęcia"/>
+            <input class="submitButton" type="button" id="imageViewSizeButton" value="Widok" />
         </div>
         <form action="{{action}}" id="addImagesForm" method="post" class="addImageForm row m-0 border border-dark p-1">
             {% for image in images %}

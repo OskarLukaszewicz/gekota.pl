@@ -47,7 +47,6 @@ class AnimalCrudController extends AbstractController
      */
     public function switchAvailabilityAjax(Animal $animal, Request $request)
     {
-
         if ($request->isXmlHttpRequest() && $request->getMethod() === "POST") {
 
             $animal->setAvaible(!($animal->isAvaible()));
@@ -58,27 +57,23 @@ class AnimalCrudController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/admin/animals/ajax/{id}/{inStock}")
-     */
 
-    public function changeInStockAjax(Animal $animal, int $inStock, Request $request)
+    /**
+     * @Route("/admin/animals/mobile/{class}", name="admin_mobile_show", defaults={"class": "lizards"})
+     */
+    public function mobileIndex(string $class = "lizards")
     {
 
-        if ($request->isXmlHttpRequest() && $request->getMethod() === "POST") {
+        $animals = $this->animalRepository->findBy(['class' => $class], ['avaible' => 'DESC']);
 
-            $animal->setInStock($inStock);
-            
-            $this->em->flush();
-    
-            return new Response($animal->getInStock(), '200');
-        }
+        return $this->render('admin/mobileView.html.twig', ['class' => $class, 'animalTypes' => self::ANIMAL_TYPES, 'animals' => $animals]);
     }
+
 
     /**
      * @Route("/admin/animals/{class}/{spieces?}", name="admin_animals_show", defaults={"class": "lizards"})
      */
-    public function index(string $class = "lizards", ?string $spieces, ?bool $addImage, Request $request)
+    public function index(string $class = "lizards", ?string $spieces, ?bool $addImage)
     {
         
         $animals = $this->animalRepository->findBy(['class' => $class], ['avaible' => 'DESC']);
@@ -196,6 +191,38 @@ class AnimalCrudController extends AbstractController
 
             default:
                 throw new ActionNotFoundException('Akcja "' . $action . '" nie została rozpoznana przez aplikację.');
+        }
+    }
+
+
+
+    /**
+     * @Route("/admin/animals/ajax/{id}/{inStock}")
+     */
+    public function changeInStockAjax(Animal $animal, int $inStock, Request $request)
+    {
+        if ($request->isXmlHttpRequest() && $request->getMethod() === "POST") {
+
+            $animal->setInStock($inStock);
+            
+            $this->em->flush();
+    
+            return new Response($animal->getInStock(), '200');
+        }
+    }
+
+    /**
+     * @Route("/admin/animals/ajax/price/{id}/{price}")
+     */
+    public function changePriceAjax(Animal $animal, int $price, Request $request)
+    {
+        if ($request->isXmlHttpRequest() && $request->getMethod() === "POST") {
+
+            $animal->setPrice($price);
+
+            $this->em->flush();
+
+            return new Response($animal->getPrice(), '200');
         }
     }
 

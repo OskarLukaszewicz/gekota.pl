@@ -1,6 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
   const checkboxes = document.querySelectorAll(".ajaxQueryCheckbox");
   const inStockInput = document.querySelectorAll(".ajaxQueryNumber");
+  const priceInput = document.querySelectorAll(".ajaxQueryPrice");
+
+  priceInput.forEach((i) => {
+    i.addEventListener("blur", (e) => {
+      e.target.disabled = "disabled";
+      const xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+          if (xhr.status === 200) {
+            e.target.disabled = "";
+          }
+        }
+      };
+      xhr.open(
+        "POST",
+        `/admin/animals/ajax/price/${e.target.dataset.id}/${e.target.value}`,
+        true
+      );
+      xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
+      xhr.send();
+    });
+  });
 
   inStockInput.forEach((input) => {
     input.addEventListener("blur", (e) => {
@@ -20,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
               animalContainer.classList.add("itemInactive");
             }
             if (xhr.responseText > 0 && siblingCheckbox.checked == false) {
+              console.log("jax");
               siblingCheckbox.checked = true;
               animalContainer.classList.remove("itemInactive");
             }

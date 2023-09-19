@@ -6,6 +6,8 @@
 parameters:
   google.api.credentials: "%env(GOOGLE_APPLICATION_CREDENTIALS)%"
   database.url: "%env(DATABASE_URL)%"
+  router.request_context.host: "localhost:8000"
+  router.request_context.scheme: "http"
 
 services:
   # default configuration for services in *this* file

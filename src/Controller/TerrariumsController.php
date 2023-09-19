@@ -11,7 +11,7 @@ class TerrariumsController extends AbstractController
 {
 
     /**
-     * @Route("/terrariums/order", name="order_terrarium_show")
+     * @Route("/terrariums/order", name="order_terrarium_show", options={"sitemap" = {"priority" = 0.7, "changefreq" = "yearly" }})
      */
 
     public function showTerrariumOrderPage()
@@ -20,7 +20,7 @@ class TerrariumsController extends AbstractController
     }
 
     /**
-     * @Route("/terrariums/arrangements", name="terrarium_arrangements_show")
+     * @Route("/terrariums/arrangements", name="terrarium_arrangements_show", options={"sitemap" = {"priority" = 0.7, "changefreq" = "monthly" }})
      */
 
      public function showTerrariumArrangements(ManagerRegistry $doctrine)

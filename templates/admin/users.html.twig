@@ -5,39 +5,47 @@
     {% if "ROLE_SUPERADMIN" in app.user.getRoles %}
 
         <div class='d-flex align-items-end'>
-            <h4 class="sectionHeader w-25">
+
+            <h1 class="sectionHeader">
                 Użytkownicy
+            </h1>
+            
+            <h4 class="sectionOffHeader">
+                <a href="{{path('admin_users_action', {'action' : "create" })}}">
+                    Dodaj użytkownika
+                </a>
             </h4>
-            <h4 class="sectionHeader w-50 ml-auto p-1">
-                <button class="w-100 m-0">
-                    <a href="{{path('admin_users_action', {'action' : "create" })}}">
-                        Dodaj użytkownika
-                    </a>
-                </button>
-            </h4>
+
         </div>
-        <ul class="list-unstyled components">
-            {% for user in users %}
-                <li {% if user.nickname == nickname %} class="itemActive contentItem" {% else %} class="contentItem" {% endif %}>
-                    <a class="px-3 d-flex align-items-center" href="{{path('admin_users_show', {'nickname' : user.nickname})}}">
-                        {{ user.nickname }}
-                    </a>
+        <div>
+            <ul class="list-unstyled components">
+                {% for user in users %}
+                <li class="contentItemContainer">
+                    <div class="m-0 align-items-center d-flex contentItem {% if user.nickname == nickname %}itemActive{% endif %}">
+                        <a class="d-flex align-items-center w-100" href="{{path('admin_users_show', {'nickname' : user.nickname})}}">
+                            {{ user.nickname }}
+                        </a>
+                    </div>
                 </li>
-            {% endfor %}
-        </ul> 
+                {% endfor %}
+            </ul> 
+        </div>
 
     {% else %}
     
         <div class='d-flex align-items-end'>
-            <h1 class="sectionHeader w-25">
+            <h1 class="sectionHeader">
                 Profil
             </h1>
         </div>
+
         <ul class="list-unstyled components">
-            <li {% if app.user.nickname == nickname %} class="itemActive contentItem" {% else %} class="contentItem" {% endif %}>
-                <a class="px-3 d-flex align-items-center" href="{{path('admin_users_show', {'nickname' : app.user.nickname})}}">
-                    {{ app.user.nickname }}
-                </a>
+            <li class="contentItemContainer">
+                <div class="m-0 align-items-center d-flex contentItem {% if app.user.nickname == nickname %}itemActive{% endif %}">
+                    <a class="pl-2 d-flex align-items-center w-100" href="{{path('admin_users_show', {'nickname' : app.user.nickname})}}">
+                        {{ app.user.nickname }}
+                    </a>
+                </div>
             </li>
         </ul>
 
@@ -49,8 +57,8 @@
 
     {% if "ROLE_SUPERADMIN" in app.user.getRoles %}
         {% if selectedUser %}
-            <div class="row">
-                <button class="offset-2 col-8">
+            <div class="row m-0">
+                <button style="width:100%">
                     <a href="{{path('admin_users_action', {'action' : "remove", id : selectedUser.id})}}" class="deleteButton rounded">
                         Usuń
                     </a>
@@ -65,7 +73,7 @@
                     </div>
                 </div>
                 <div class='infoContainer'>
-                    <div class="row p-1 m-1">
+                    <div class="row m-0 p-2 pb-3" style="line-height:1.7rem;">
                         <div class="col-5">Nickname: </div>
                         <div class="col-7">{{selectedUser.nickname}}</div>
                         <div class="col-5">Role: </div>
@@ -89,13 +97,13 @@
         {% endif %}
     {% else %}
         {% if selectedUser %}
-            <div class="row">
-                <button class="col-6">
+            <div class="row m-0">
+                <button style="width:50%">
                     <a href="{{path('admin_users_action', {'action' : "update", id : selectedUser.id })}}">
                         Edytuj
                     </a>
                 </button>
-                <button class="col-6">
+                <button style="width:49%">
                     <a href="{{path('admin_users_action', {'action' : "remove", id : selectedUser.id})}}" class="deleteButton">
                         Usuń
                     </a>
@@ -110,7 +118,7 @@
                     </div>
                 </div>
                 <div class='infoContainer'>
-                    <div class="row p-1 m-1">
+                    <div class="row m-0 p-2 pb-3" style="line-height:1.7rem;">
                         <div class="col-5">Login: </div>
                         <div class="col-7">{{selectedUser.username}} </div>
                         <div class="col-5">Nickname: </div>
