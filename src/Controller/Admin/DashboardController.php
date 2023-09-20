@@ -94,19 +94,19 @@ class DashboardController extends AbstractController
     }
 
     /**
-     * @Route("/admin/dashboard/ajax/{text}")
+     * @Route("/admin/dashboard/ajax/note", methods={"POST"})
      */
-    public function saveNotes(string $text, Request $request)
+    public function saveNotes(Request $request)
     {
+        
+        $note = $request->request->get('note');
 
-        if ($request->isXmlHttpRequest() && $request->getMethod() === "POST") {
+        $config = $this->getUser()->getDashboardConfig() ?: $config = new DashboardConfig();
+        $config->setNotes($note);
+        
+        $this->em->flush();
 
-            $config = $this->getUser()->getDashboardConfig() ?: $config = new DashboardConfig();
-            $config->setNotes($text);
-            
-            $this->em->flush();
+        return new Response($note, '200');
     
-            return new Response(1, '200');
-        }
     }
 }

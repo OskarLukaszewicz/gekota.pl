@@ -1,8 +1,9 @@
 const notes = document.getElementById("notes");
+let note;
+let params;
 
 notes.addEventListener("blur", (e) => {
   e.target.disabled = "disabled";
-  console.log(e.target);
   const xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function () {
     if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -11,7 +12,12 @@ notes.addEventListener("blur", (e) => {
       }
     }
   };
-  xhr.open("POST", `/admin/dashboard/ajax/${e.target.value}`, true);
-  xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-  xhr.send();
+
+  !e.target.value ? (note = "Miejsce na notatke") : (note = e.target.value);
+
+  params = `note=${note}`;
+
+  xhr.open("POST", `/admin/dashboard/ajax/note`, true);
+  xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhr.send(params);
 });

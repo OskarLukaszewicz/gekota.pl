@@ -13,7 +13,7 @@
 
             <div class="col-3 col-2 col-1 imageContainer p-1">
                 <img src={{ asset('images/'~image) }} class="addImageImage" data-url="{{image.url}}"></img>
-                <button class="deleteXButton"> <a class="deleteButton" href="{{path('admin_images_action', {'action' : "remove", id : image.id })}}">x</a></button>
+                <button class="deleteXButton"> <a class="deleteButton" href="{{path('admin_images_action', {'action' : "remove", id : image.id })}}">X</a></button>
             </div>
 
         {% endfor %}

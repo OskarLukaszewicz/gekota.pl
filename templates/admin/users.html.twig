@@ -22,7 +22,7 @@
                 {% for user in users %}
                 <li class="contentItemContainer">
                     <div class="m-0 align-items-center d-flex contentItem {% if user.nickname == nickname %}itemActive{% endif %}">
-                        <a class="d-flex align-items-center w-100" href="{{path('admin_users_show', {'nickname' : user.nickname})}}">
+                        <a class="d-flex align-items-center w-100 pl-2" href="{{path('admin_users_show', {'nickname' : user.nickname})}}">
                             {{ user.nickname }}
                         </a>
                     </div>
