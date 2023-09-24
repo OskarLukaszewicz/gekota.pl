@@ -10,7 +10,6 @@ use Google\Analytics\Data\V1beta\Dimension;
 use Google\Analytics\Data\V1beta\Metric;
 use Google\Analytics\Data\V1beta\OrderBy;
 use Google\Analytics\Data\V1beta\OrderBy\MetricOrderBy;
-use Google\Analytics\Data\V1beta\OrderBy\MetricOrderBy\OrderType as Order;
 use Symfony\Component\HttpFoundation\Request;
 
 class GoogleApiDataProvider
@@ -78,7 +77,7 @@ class GoogleApiDataProvider
                 ]
             )
             ]
-            ]);
+        ]);
 
         $dateUserData = $response->getRows();
 

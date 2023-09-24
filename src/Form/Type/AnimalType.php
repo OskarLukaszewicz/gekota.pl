@@ -15,7 +15,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AnimalType extends AbstractType
 {
-
     private $images;
     private $imageRepository;
 

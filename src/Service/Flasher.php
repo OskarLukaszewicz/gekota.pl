@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Service;
-
 class Flasher 
 {
     static function getFlashMessage(string $action, string $object, string $objectName = null): string

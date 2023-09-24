@@ -206,7 +206,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return null;
     }
     
-
     public function __toString()
     {
         return $this->getNickname();

@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Animal;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
 class OfferController extends AbstractController
 {

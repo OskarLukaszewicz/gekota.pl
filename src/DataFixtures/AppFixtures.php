@@ -42,22 +42,22 @@ class AppFixtures extends Fixture
 
     private const ANIMALS = 
     [
-        "lizard" => "lizards",  //0
-        "lizard1" => "lizards", //1
-        "lizard2" => "lizards", //2
-        "lizard3" => "lizards", //3
-        "snake" => "snakes",    //4
-        "snake1" => "snakes",   //5
-        "turtle" => "turtles",  //6
-        "turtle1" => "turtles", //7
-        "frog" => "amphibians", //8
-        "frog1" => "amphibians", //9
-        "spider" => "arachnids", //10
-        "scorpio" => "arachnids", //11
-        "mantis" => "mantises", //12
-        "mantis1" => "mantises", //13
-        "bug" => "others",      //14
-        "bug1" => "others",     //15
+        "lizard" => "lizards", 
+        "lizard1" => "lizards",
+        "lizard2" => "lizards",
+        "lizard3" => "lizards",
+        "snake" => "snakes",   
+        "snake1" => "snakes",  
+        "turtle" => "turtles", 
+        "turtle1" => "turtles",
+        "frog" => "amphibians",
+        "frog1" => "amphibians",
+        "spider" => "arachnids", 
+        "scorpio" => "arachnids", 
+        "mantis" => "mantises", 
+        "mantis1" => "mantises", 
+        "bug" => "others",      
+        "bug1" => "others",     
     ];
     private const GALLERIES = 
     [
@@ -281,7 +281,6 @@ class AppFixtures extends Fixture
     ];
     
     
-
     public function load(ObjectManager $manager): void
     {
         $this->loadUsers($manager);
@@ -321,7 +320,6 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
     
-
     public function loadAnimals($manager)
     {
         $i = 0;
@@ -408,7 +406,6 @@ class AppFixtures extends Fixture
         }
 
         $manager->flush();
-
     }
 
     public function loadEvents($manager)

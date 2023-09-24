@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Entity\DashboardConfig;
 use App\Exception\ActionNotFoundException;
 use App\Service\ChartBuilder;
-use App\Service\FakeChartDataProvider;
 use App\Service\GoogleApiDataProvider;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,7 +37,7 @@ class DashboardController extends AbstractController
      */
     public function index(Request $request, ChartBuilderInterface $chartBuilder) 
     { 
-        $config = $this->getUser()->getDashboardConfig() ?: $config = new DashboardConfig();
+        $config = $this->getUser()->getDashboardConfig() ?: $config = new DashboardConfig(); $this->em->persist($config); $this->getUser()->setDashboardConfig($config); $this->em->flush();
         
         $animals = $this->animalRepository->findBy([],['createdAt' => "DESC"], $config->getAnimalsNum());
         $posts = $this->blogPostRepository->findBy([],['createdAt' => "DESC"], $config->getBlogPostsNum());

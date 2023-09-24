@@ -208,15 +208,6 @@ body {
   overflow: hidden;
 }
 
-/* 
-  rgb(18, 92, 19)   darkGreen
-  rgb(62, 124, 23)  Green
-  rgb(244, 164, 66) orange
-  rgb(232, 225, 217) whitish
-  rgb(0, 109, 89) inactive
-  rgb(114, 190, 65) active
- */
-
 .sectionHeader {
   color: rgb(232, 225, 217);
   background-color: rgb(62, 124, 23);

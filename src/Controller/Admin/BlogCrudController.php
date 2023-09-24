@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\BlogPost;
-use App\Entity\User;
 use App\Exception\ActionNotFoundException;
 use App\Exception\ObjectByIdNotFoundException;
 use App\Form\Type\BlogPostType;
@@ -21,13 +20,11 @@ class BlogCrudController extends AbstractController
     private const SECTION = "blog";
     private $blogRepository;
     private $imageRepository;
-    private $userRepository;
     private $em;
 
     public function __construct(ManagerRegistry $doctrine)
     {
         $this->blogRepository = $doctrine->getRepository("App\Entity\BlogPost");
-        $this->userRepository = $doctrine->getRepository("App\Entity\User");
         $this->imageRepository = $doctrine->getRepository("App\Entity\Image");
         $this->em = $doctrine->getManager();
     }

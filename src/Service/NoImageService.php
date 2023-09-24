@@ -12,7 +12,7 @@ class NoImageService
     {
 
     }
-
+    
     public static function getNoImageInstance(): Image
     {
         if (!self::$instance) {

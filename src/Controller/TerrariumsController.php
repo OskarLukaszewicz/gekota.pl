@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Gallery;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;

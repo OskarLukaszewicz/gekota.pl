@@ -4,7 +4,6 @@ namespace App\Entity;
 
 use App\Repository\DashboardConfigRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Faker\Provider\Lorem;
 
 /**
  * @ORM\Entity(repositoryClass=DashboardConfigRepository::class)

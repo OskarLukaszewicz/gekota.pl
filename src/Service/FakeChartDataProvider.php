@@ -44,8 +44,6 @@ class FakeChartDataProvider
 
         }
 
-
-
         for ($i = 0; $i < 10; $i++) {
 
             $cityUserData['cities'][$i] = self::$faker->city();

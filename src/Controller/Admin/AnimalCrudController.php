@@ -6,7 +6,6 @@ use App\Entity\Animal;
 use App\Entity\Image;
 use App\Exception\ActionNotFoundException;
 use App\Exception\ObjectByIdNotFoundException;
-use App\Repository\ImageRepository;
 use App\Service\Flasher;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

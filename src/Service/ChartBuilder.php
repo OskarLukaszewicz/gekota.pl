@@ -21,10 +21,10 @@ class ChartBuilder
         $dateUserChart = $chartBuilder->createChart(Chart::TYPE_LINE);
 
         foreach ($data['dateUserData']['dates'] as $date) {
-            $month = substr($date, 4, 2); // Wyodrębnij miesiąc (następne 2 znaki)
-            $day = substr($date, 6, 2); // Wyodrębnij dzień (ostatnie 2 znaki)
-            
-            $formattedDate = $day . '.' . $month; // Sklej nowy format 'mm.dd'
+
+            $month = substr($date, 4, 2);
+            $day = substr($date, 6, 2); 
+            $formattedDate = $day . '.' . $month;
             
             $formattedDates[] = $formattedDate;
         }

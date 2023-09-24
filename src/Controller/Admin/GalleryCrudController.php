@@ -3,8 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Gallery;
-use App\Exception\ActionNotFoundException;
-use App\Exception\ObjectByIdNotFoundException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,14 +37,13 @@ class GalleryCrudController extends AbstractController
 
         if (empty($galleries)) {
 
-                foreach (self::GALLERIES as $gallerySectionName)
-                {
-                    $gallery = new Gallery();
-                    $gallery->setSectionName($gallerySectionName);
-                    
-                    $this->em->persist($gallery);
-
-                }
+            foreach (self::GALLERIES as $key => $gallerySectionName)
+            {
+                $gallery = new Gallery();
+                $gallery->setSectionName($key);
+                
+                $this->em->persist($gallery);
+            }
     
             $this->em->flush();
             $this->index();

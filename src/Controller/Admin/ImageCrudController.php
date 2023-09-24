@@ -5,7 +5,6 @@ namespace App\Controller\Admin;
 use App\Exception\ActionNotFoundException;
 use App\Exception\ObjectByIdNotFoundException;
 use App\Service\Flasher;
-use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -106,12 +105,6 @@ class ImageCrudController extends AbstractController
                 }
 
                 return $this->renderForm('admin/embeddedActionPage.html.twig', ['form' => $form]);
-                    
-            case "update":
-
-                // Brak możliwości
-
-
 
             default:
                 throw new ActionNotFoundException('Akcja "' . $action . '" nie została rozpoznana przez aplikację.');
