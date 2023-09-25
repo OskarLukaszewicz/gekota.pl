@@ -43,8 +43,8 @@ class DashboardController extends AbstractController
         $posts = $this->blogPostRepository->findBy([],['createdAt' => "DESC"], $config->getBlogPostsNum());
         $events = $this->eventRepository->getEventsByDateRange($config->getEventsWeeksNum());
 
-        $credentials = $this->getParameter('google.api.credentials');
-        $dataProvider = new GoogleApiDataProvider($request, $credentials, $config->getChartDaysRange());
+        // $credentials = $this->getParameter('google.api.credentials');
+        $dataProvider = new GoogleApiDataProvider($request, null, $config->getChartDaysRange());
         $data = $dataProvider->provideData(true);
         
         $charts = ChartBuilder::generateChartsForDashboard($chartBuilder, $data);

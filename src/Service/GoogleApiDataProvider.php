@@ -20,14 +20,14 @@ class GoogleApiDataProvider
     private $credentials;
     private $daysAgo;
 
-    public function __construct(Request $request, string $credentials, int $daysAgo)
+    public function __construct(Request $request, ?string $credentials, int $daysAgo)
     {
         $this->request = $request;
         $this->credentials = $credentials;
         $this->daysAgo = $daysAgo;
-        $this->client = new BetaAnalyticsDataClient(
-            ['credentials' => $credentials]
-        );
+        // $this->client = new BetaAnalyticsDataClient(
+        //     ['credentials' => $credentials]
+        // );
         $this->propertyId = "314720165";
     }
 
