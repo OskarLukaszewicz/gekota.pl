@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 class SetupAppCommand extends Command
@@ -27,6 +28,15 @@ class SetupAppCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+
+        $appRootDirectory = $this->getApplication()->getKernel()->getProjectDir();
+        $migrationsDirectory = $appRootDirectory . '/migrations';
+
+        $filesystem = new Filesystem();
+        if (!$filesystem->exists($migrationsDirectory)) {
+            $filesystem->mkdir($migrationsDirectory);
+            $io->success('Created migrations directory in the app root directory.');
+        }
 
         if ($input->getOption('install')) {
             $io->success('Running composer install...');
