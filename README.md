@@ -31,7 +31,7 @@ Follow these steps to set up the Gekota Shop App:
 
         composer install
 
-4. Create database, migration, migrate and load data fixtures:
+4. Create database (SQLite needed), migration, migrate and load data fixtures:
 
        php bin/console app:setup --create-database --make-migration --run-migration --load-fixtures
 
