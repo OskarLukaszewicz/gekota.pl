@@ -45,7 +45,7 @@ Follow these steps to set up the Gekota Shop App:
 
 <h2>Usage</h2>
 
-Visit the homepage to explore the Blog and Offer sections.
+Visit the homepage to explore the Blog, Offer, Calendar and Galleries sections.
 
 Use the admin panel (accessible at '/admin') to manage products, blog, events, galleries, images and users.
 
