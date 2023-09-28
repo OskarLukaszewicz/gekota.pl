@@ -61,9 +61,9 @@ src/Service/GoogleApiDataProvider class provided data from Google Analytics API.
 
 The provided data is being used by src/Service/ChartBuilder (using Symfony UX Chart.js) class to generate charts that are visible at default '/admin' path.
 
-There are many minor features working inside of controllers. 
-
-
+Mobile view is accessible by mobile version of login page (based on viewport). It gives access only to /admin/animals path for quick ajax actions.
+ 
+There are many minor features working inside of controllers.
 
 
 <h4>Thanks for Reading!<h4>
