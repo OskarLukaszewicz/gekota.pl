@@ -213,7 +213,7 @@ class AnimalCrudController extends AbstractController
     /**
      * @Route("/admin/animals/ajax/price/{id}/{price}")
      */
-    public function changePriceAjax(Animal $animal, int $price, Request $request)
+    public function changePriceAjax(Animal $animal, string $price, Request $request)
     {
         if ($request->isXmlHttpRequest() && $request->getMethod() === "POST") {
 

@@ -40,7 +40,7 @@ class AnimalType extends AbstractType
         ])
             ->add('spieces', TextType::class, ['label' => 'Gatunek'])
             ->add('common_name', TextType::class, ['label' => 'Nazwa zwyczajowa'])
-            ->add('price', IntegerType::class, ['label' => 'Cena'])
+            ->add('price', TextType::class, ['label' => 'Cena'])
             ->add('in_stock', IntegerType::class, [
                 'label' => 'Sztuk na stanie',
                 'required' => false,
